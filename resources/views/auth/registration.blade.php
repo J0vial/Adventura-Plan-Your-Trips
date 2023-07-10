@@ -35,19 +35,22 @@
             </ul>
         </div>
     </nav> <!-- end of navbar -->
-    <div class="container" id="container" style="min-height: 550px;">
+    <h1 style="color:whitesmoke;margin-bottom:20px">Create an Account</h1>
+    @if(Session::has('success'))
+    <div class = "alert alert-success">{{session::get('success')}}</div>
+    @endif
+
+    @if(Session::has('fail'))
+    <div class = "alert alert-danger">{{session::get('fail')}}</div>
+    @endif
+
+    <div class="container" id="container" style="min-height: 580px;">
         <div class="form-container sign-in-container">
             <form action="{{route('register-user')}}" method="post">
-                @if(Session::has('success'))
-                <div class = "alert alert-success">{{session::get('success')}}</div>
-                @endif
-
-                @if(Session::has('fail'))
-                <div class = "alert alert-danger">{{session::get('fail')}}</div>
-                @endif
+                
 
                 @csrf 
-                <h1>Create Account</h1>
+                
 
                 <input type="text" placeholder="Name" name = "name" />
                 <span class ='text-danger'>@error('name') {{$message}} @enderror</span>
@@ -62,6 +65,10 @@
 
                 <input type="password" placeholder="Password" name = "pass"/>
                 <span class ='text-danger'>@error('pass') {{$message}} @enderror</span>
+
+                <input type="password" placeholder="Confirm Password" name = "cpass"/>
+                <span class ='text-danger'>@error('pass') {{$message}} @enderror</span>
+                
                 
 
                 <button style="margin-top:5px" onclick="location.href='/login'">Sign Up</button>

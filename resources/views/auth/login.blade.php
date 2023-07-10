@@ -23,15 +23,15 @@
         <!-- end of mobile menu toggle button -->
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault" >
-            <div class="overlay-panel overlay-right">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" >
-                        <a href="/">
-                            <button class="ghost" id="signUp" style="margin-top:30px;">  GO BACK TO HOMEPAGE</button>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" >
+                    <a href="/">
+                        <button class="ghost" id="signUp" > GO BACK TO HOMEPAGE</button>
+                    </a>
+                </li>
+            </ul>
+        
         </div>
     </nav> <!-- end of navbar -->
 

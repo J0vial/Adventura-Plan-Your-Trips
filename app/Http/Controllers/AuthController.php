@@ -53,30 +53,36 @@ class AuthController extends Controller
             'name'=>'required',
             'email'=>'required|email|unique:users',
             'phone_num'=>'required|min:11',
-            'pass'=>'required|min:6|max:12'
+            'pass'=>'required|min:6|max:12',
+            'cpass'=>'required|min:6|max:12',
 
         ]);
 
         
-        $saved = DB::table('users')->insert([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone_num' => $request->phone_num,
-            'adress' =>  $request->adress,
-            'pass' => Hash::make(($request->pass)),
-            'user_type' => 'user',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),                
-        ]);
-        
-        if($saved){
+        if ($request->pass == $request->cpass) {
+            
+            $saved = DB::table('users')->insert([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone_num' => $request->phone_num,
+                'adress' =>  $request->adress,
+                'pass' => Hash::make(($request->pass)),
+                'user_type' => 'user',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),                
+            ]);
 
-            return redirect('login')->with('success','You have been registered!');
+            if($saved){
 
+                return redirect('login')->with('success','You have been registered!');
+
+            }else{
+
+                return back()->with('fail','Something Wrong!');
+
+            }
         }else{
-
-            return back()->with('fail','Something Wrong!');
-
+            return back()->with('fail','Password doesnt match!');  
         }
 
     }
