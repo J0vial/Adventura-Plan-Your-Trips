@@ -34,18 +34,19 @@
         
         </div>
     </nav> <!-- end of navbar -->
+    
+    @if(Session::has('success'))
+    <div class = "alert alert-success">{{session::get('success')}}</div>
+    @endif
 
+    @if(Session::has('fail'))
+    <div class = "alert alert-danger">{{session::get('fail')}}</div>
+    @endif
 
     <div class="container" id="container" style="min-height: 500px;">
         <div class="form-container sign-in-container">
             <form action="{{route('login-user')}}" method='post'>
-                @if(Session::has('success'))
-                <div class = "alert alert-success">{{session::get('success')}}</div>
-                @endif
-
-                @if(Session::has('fail'))
-                <div class = "alert alert-danger">{{session::get('fail')}}</div>
-                @endif
+                
                 @csrf
                 <h1>Sign in</h1>
 
