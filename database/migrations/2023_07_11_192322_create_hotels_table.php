@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('dist_name');
             $table->string('price');
             $table->string('vacancy');
-            $table->string('user_review_id')->references('id')->on('user_reviews')->onDelete('cascade');
+            $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
         });
     }
 

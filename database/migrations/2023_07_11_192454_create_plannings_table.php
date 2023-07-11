@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
-            $table->string('user_name_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('transportation_id')->references('id')->on('transportations')->onDelete('cascade');
-            $table->string('hotels_id')->references('id')->on('hotels')->onDelete('cascade');
-            $table->string('spot_id')->references('id')->on('spots')->onDelete('cascade');
-            $table->string('user_review_id')->references('id')->on('user_reviews')->onDelete('cascade');
+            $table->foreignId('users_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('transportations_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('hotels_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('spots_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
         });
-
     }
 
     /**
