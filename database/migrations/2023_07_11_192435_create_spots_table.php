@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('pictures');
+            $table->string('longitude and latitude');
             $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
             $table->foreignId('transportations_id')->constrained()->cascadeOnDelete();
         });

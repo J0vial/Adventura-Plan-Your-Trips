@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hotels', function (Blueprint $table) {
+            
             $table->id();
             $table->string('name');
             $table->string('spot_name');
             $table->string('dist_name');
             $table->string('price');
             $table->string('vacancy');
+            $table->string('longitude and latitude');
             $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
         });
     }
@@ -28,5 +30,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('hotels');
+        
     }
 };
