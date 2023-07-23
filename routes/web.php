@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomePage;
 use App\Http\Controllers\Spots;
 
 /*
@@ -15,9 +16,8 @@ use App\Http\Controllers\Spots;
 |
 */
 
-Route::get('/', function () {
-    return view('homePage');
-});
+Route::get('/',[HomePage::class,'imageAndDescription']);
+
 Route::get('/login',[AuthController::class,'login']);
 Route::post('login-user',[AuthController::class,'loginUser'])->name('login-user');
 

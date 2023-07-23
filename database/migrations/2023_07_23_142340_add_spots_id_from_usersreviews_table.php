@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spots', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->string('pictures');
-            $table->string('longitude and latitude');
-            $table->string('districtName');
+        Schema::table('usersreviews', function (Blueprint $table) {
+            //
             $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('transportations_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -28,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spots');
+        Schema::table('usersreviews', function (Blueprint $table) {
+            //
+        });
     }
 };
