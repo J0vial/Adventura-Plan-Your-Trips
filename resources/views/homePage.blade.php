@@ -2,16 +2,7 @@
 
 @section('template')
     
-    <link href="{{ asset('home_page/css/bootstrap.css')}}" rel="stylesheet">
-    <link href="{{ asset('home_page/css/fontawesome-all.css')}}" rel="stylesheet">
-    <link href="{{ asset('home_page/css/swiper.css')}}" rel="stylesheet">
-	<link href="{{ asset('home_page/css/magnific-popup.css')}}" rel="stylesheet">
-	<link href="{{ asset('home_page/css/styles.css')}}" rel="stylesheet">
-	
-	<!-- Favicon  -->
     
-</head>
-<body data-spy="scroll" data-target=".fixed-top">
 
 
    

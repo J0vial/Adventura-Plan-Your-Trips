@@ -1,4 +1,13 @@
-
+    <link href="{{ asset('home_page/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{ asset('home_page/css/fontawesome-all.css')}}" rel="stylesheet">
+    <link href="{{ asset('home_page/css/swiper.css')}}" rel="stylesheet">
+	<link href="{{ asset('home_page/css/magnific-popup.css')}}" rel="stylesheet">
+	<link href="{{ asset('home_page/css/styles.css')}}" rel="stylesheet">
+	
+	<!-- Favicon  -->
+    
+</head>
+<body data-spy="scroll" data-target=".fixed-top">
 <!-- Navbar -->
 <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
     <!-- Text Logo - Use this if you don't have a graphic logo -->
@@ -17,13 +26,13 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
+                <a class="nav-link page-scroll" href="/">HOME <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link page-scroll" href="spots">SPOTS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#services">TRIP PLAN</a>
+                <a class="nav-link page-scroll" href="trips">TRIP PLAN</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link page-scroll" href="#callMe">HOTELS</a>

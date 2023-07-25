@@ -91,7 +91,7 @@ class AuthController extends Controller
 
         $data = array();
         if (Session::has('loginId')){
-            $data = User::where('id', '=', Session::get('loginId'))->first();
+            $data = DB::table('users')->where('id', '=', Session::get('loginId'))->first();
         }
         return view('dashboard',compact('data'));
     }

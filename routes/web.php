@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomePage;
 use App\Http\Controllers\Spots;
+use App\Http\Controllers\trips;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::get("/dashboard",[AuthController::class,'dashboard'])->middleware('isLogg
 Route::get('/logout',[AuthController::class,'logout']);
 
 Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
+
+Route::get('/trips',[trips::class,'trip_plan']);
