@@ -17,12 +17,12 @@ use App\Http\Controllers\trips;
 |
 */
 
-Route::get('/',[HomePage::class,'imageAndDescription']);
+Route::get('/',[HomePage::class,'imageAndDescription'])->middleware('islogout');
 
-Route::get('/login',[AuthController::class,'login']);
+Route::get('/login',[AuthController::class,'login'])->middleware('islogout');
 Route::post('login-user',[AuthController::class,'loginUser'])->name('login-user');
 
-Route::get("/register",[AuthController::class,'register']);
+Route::get("/register",[AuthController::class,'register'])->middleware('islogout');
 Route::post("/register-user",[AuthController::class,'registerUser']) -> name('register-user');
 
 Route::get("/dashboard",[AuthController::class,'dashboard'])->middleware('isLoggedIn');

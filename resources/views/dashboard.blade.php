@@ -8,6 +8,8 @@
     <link href="{{ asset('home_page/css/swiper.css') }}" rel="stylesheet">
 	<link href="{{ asset('home_page/css/magnific-popup.css') }}" rel="stylesheet">
 	<link href="{{ asset('home_page/css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('dash_board/css/styles.css') }}" rel="stylesheet">
+    
 	
 	<!-- Favicon  -->
     <link rel="icon" href="{{ asset('home_page/images/favicon.png') }}">
@@ -21,7 +23,7 @@
 
 
     <!-- Header -->
-    <header id="header" class="header">
+    <header id="header" class="header" >
         <div class="header-content">
             <div class="container">
                 <div class="row">
@@ -31,13 +33,18 @@
                             <p class="p-heading p-large">WELCOME {{$data->name}}</p>
                             <a class="btn-solid-lg page-scroll" href="logout">LOGOUT</a>
                             
+                            
                         </div>
                     </div> <!-- end of col -->
                 </div> <!-- end of row -->
+                
             </div> <!-- end of container -->
         </div> <!-- end of header-content -->
     </header> <!-- end of header -->
     <!-- end of header -->
+   
+    @include('footer')
+
 
 
     
@@ -53,4 +60,5 @@
     <script src="{{ asset('home_page/js/isotope.pkgd.min.js') }}"></script> <!-- Isotope for filter -->
     <script src="{{ asset('home_page/js/validator.min.js') }}"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="{{ asset('home_page/js/scripts.js') }}"></script> <!-- Custom scripts -->   
+    <script src="{{ asset('dash_board/js/style.js') }}"></script>
 @endsection
