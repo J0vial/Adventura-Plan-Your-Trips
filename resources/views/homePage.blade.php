@@ -48,7 +48,7 @@
                                 <div class="swiper-slide">
                                     <div class="card">
                                         
-                                        <img class="card-image" src="storage/{{$item->pictures}}" alt="alternative">
+                                        <img class="card-image" src="store_pics/{{$item->pictures}}" alt="alternative">
                                         
                                         <div class="card-body">
                                             <div class="testimonial-text">{{ $item->description }}</div>
