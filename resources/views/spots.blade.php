@@ -9,6 +9,7 @@
 	<link href="{{ asset('home_page/css/magnific-popup.css') }}" rel="stylesheet">
 	<link href="{{ asset('home_page/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('dash_board/css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('spot/style.css') }}" rel="stylesheet">
     
 	
 	<!-- Favicon  -->
@@ -23,24 +24,62 @@
 
 
     <!-- Header -->
+    @if ($boolean==True)
+    <header id="header" class="header"style="margin-bottom: 10px;">
+    @else
     <header id="header" class="header" >
-        <div class="header-content">
-            <div class="container">
+    @endif
+        <div class="header-content" >
+            <div class="container" >
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Search for the Spots</h1>
-                        <div class="input-box" style="margin-left: 100px; margin-top:50px">
-                            <i class="uil uil-search"></i>
-                            <input type="text" placeholder="Search here..." />
-                            <button class="button">Search</button>
-                        </div>
+                        <form action="">
+                            <div class="input-box" style="margin-left:100px; margin-top:50px">
+                                <i class="uil uil-search"></i>
+                                <input   name ="search" type="search" placeholder="Search here..." />
+                                <button class="button">Search</button>
+                            </div>
+                        </form>
                     </div> <!-- end of col -->
                 </div> <!-- end of row -->
-                
             </div> <!-- end of container -->
+             
+            
         </div> <!-- end of header-content -->
     </header> <!-- end of header -->
     <!-- end of header -->
+    
+        @if($boolean==True)
+            
+        
+            @foreach($spots as $spot)
+                <div class="container" style="margin-left:250px; margin-top:50px;"> 
+                    <div class="col-md-9 col-md-pull-3" >
+                        <section class="search-result-item" >
+                            <a class="image-link" href="#"><img class="image" src="store_pics/{{$spot->pictures}}">
+                            </a>
+                            <div class="search-result-item-body">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <h4 class="search-result-item-heading"><a href="#">john doe</a></h4>
+                                        <p class="info">New York, NY 20188</p>
+                                        <p class="description">Not just usual Metro. But something bigger. Not just usual widgets, but real widgets. Not just yet another admin template, but next generation admin template.</p>
+                                    </div>
+                                    <div class="col-sm-3 text-align-center">
+                                        <p class="value3 mt-sm">$9, 700</p>
+                                        <p class="fs-mini text-muted">PER WEEK</p><a class="btn btn-primary btn-info btn-sm" href="#">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <hr style="background-color: black; width:53%; margin-left:20%;">
+            @endforeach
+        
+        @endif
+    
    
     @include('footer')
 
