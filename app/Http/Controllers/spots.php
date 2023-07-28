@@ -9,19 +9,25 @@ use PhpOption\None;
 class Spots extends Controller
 {
     public function spot_page(Request $request){
-        $boolean = false;
+        
         $search = $request['search'] ?? ""; // check null search or what
-        $spots = array();
+        $count_result = array();
+        $spots = 0;
         if ($search != "" ){
             
-            $spots = DB::table('spots')->where('name','LIKE','%'.$search.'%')->orWhere('districtName','LIKE','%'.$search.'%')->get(); 
-            $boolean = True;
+            $spots = DB::table('spots')->where('name','LIKE','%'.$search.'%')->orWhere('districtName','LIKE','%'.$search.'%')->paginate(7);
+
+            $count_result = DB::table('spots')->where('name','LIKE','%'.$search.'%')->orWhere('districtName','LIKE','%'.$search.'%')->count();
             
         }else{
-
+            $spots = DB::table('spots')->paginate(7);
         }
-        
-        
-        return view("spots",compact('spots','boolean'));
+        return view("spots",compact('spots','search','count_result'));
     }
+
+    
+
+
+
+
 }

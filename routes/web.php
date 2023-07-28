@@ -31,4 +31,5 @@ Route::get('/logout',[AuthController::class,'logout']);
 
 Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
 
+
 Route::get('/trips',[trips::class,'trip_plan']);

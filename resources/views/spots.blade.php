@@ -10,6 +10,10 @@
 	<link href="{{ asset('home_page/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('dash_board/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('spot/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('spot/pop_up.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />            
+            
+
     
 	
 	<!-- Favicon  -->
@@ -24,11 +28,8 @@
 
 
     <!-- Header -->
-    @if ($boolean==True)
-    <header id="header" class="header"style="margin-bottom: 10px;">
-    @else
+   
     <header id="header" class="header" >
-    @endif
         <div class="header-content" >
             <div class="container" >
                 <div class="row">
@@ -37,50 +38,79 @@
                         <form action="">
                             <div class="input-box" style="margin-left:100px; margin-top:50px">
                                 <i class="uil uil-search"></i>
-                                <input   name ="search" type="search" placeholder="Search here..." />
+                                <input  value="{{$search}}" name ="search" type="search" placeholder="Search here..." />
                                 <button class="button">Search</button>
                             </div>
                         </form>
                     </div> <!-- end of col -->
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
-             
-            
+        @if ($count_result == 0)
+            <div id='alrt'  style="width:50%;margin-top:5%; margin-left:23%;">
+            </div>
+            <a class="btn-solid-lg page-scroll" href="spots">Show all Data</a>
+        @endif
+        <script>
+            document.getElementById('alrt').innerHTML='<div class="alert alert-danger" style="color:red;"><b>Nothing Found</b></div>'; 
+            setTimeout(function() {
+                document.getElementById('alrt').innerHTML='';},5000)
+        </script>  
         </div> <!-- end of header-content -->
     </header> <!-- end of header -->
     <!-- end of header -->
+
     
-        @if($boolean==True)
-            
+    
         
-            @foreach($spots as $spot)
-                <div class="container" style="margin-left:250px; margin-top:50px;"> 
-                    <div class="col-md-9 col-md-pull-3" >
-                        <section class="search-result-item" >
-                            <a class="image-link" href="#"><img class="image" src="store_pics/{{$spot->pictures}}">
-                            </a>
-                            <div class="search-result-item-body">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <h4 class="search-result-item-heading"><a href="#">john doe</a></h4>
-                                        <p class="info">New York, NY 20188</p>
-                                        <p class="description">Not just usual Metro. But something bigger. Not just usual widgets, but real widgets. Not just yet another admin template, but next generation admin template.</p>
-                                    </div>
-                                    <div class="col-sm-3 text-align-center">
-                                        <p class="value3 mt-sm">$9, 700</p>
-                                        <p class="fs-mini text-muted">PER WEEK</p><a class="btn btn-primary btn-info btn-sm" href="#">Learn More</a>
-                                    </div>
+    @if (count($spots)>0)
+        @foreach($spots as $spot)
+            
+            <div class="container" style="margin-left:250px; margin-top:-50px;"> 
+                <div class="col-md-9 col-md-pull-3" >
+                    <section class="search-result-item" >
+                        <a class="image-link" href="#"><img class="image" src="store_pics/{{$spot->pictures}}">
+                        </a>
+                        <div class="search-result-item-body">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <h4 class="search-result-item-heading">{{$spot->name}}</h4>
+                                    <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->districtName}}</p>
+                                    <p class="description" style=" --max-lines:3; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines); ">{{$spot->description}}</p>
                                 </div>
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
-                <hr style="background-color: black; width:53%; margin-left:20%;">
-            @endforeach
-        
-        @endif
+            </div>
+            <hr style="background-color: black; width:53%; margin-left:20%;">
+            
+        @endforeach
+    @endif
+    <style>
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #fff;
+            background-color: #14bf98; 
+            border-color: #14bf98; 
+        }
+
+        .row{
+            --bs-gutter-x: 20rem;
+        }
+         
+    </style>
     
-   
+    <div class="row" style="margin-left: 100px;">
+        {{$spots->links('pagination::bootstrap-5')}}
+    </div>
+
+
+        
+        
+        
+        
+        
+    
     @include('footer')
 
 
@@ -99,4 +129,5 @@
     <script src="{{ asset('home_page/js/validator.min.js') }}"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="{{ asset('home_page/js/scripts.js') }}"></script> <!-- Custom scripts -->   
     <script src="{{ asset('dash_board/js/style.js') }}"></script>
+    <script src="{{ asset('spot/js/script.js') }}"></script>
 @endsection
