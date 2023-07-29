@@ -75,13 +75,9 @@
                                 <div class="col-sm-9">
                                     <h4 class="search-result-item-heading">
                                         
-                                        <a href="javascript:void(0)" 
-                                        id='show-spot' 
-                                        data-url="{{route('spot-up',$spot->id)}}"  
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#staticBackdrop">
-                                            {{$spot->name}}
-                                        </a>
+                                    <a href="" class="detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{ $spot->id }}">{{$spot->name}}</a>
+                                        
+                                    
                                         
                                     </h4>
                                     <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->districtName}}</p>
@@ -115,25 +111,40 @@
     </div>
 
     <!-- Button trigger modal -->
-    
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal" tabindex="-1" id="myModal">
         <div class="modal-dialog">
-            <div class="modal-content">
+          <div class="modal-content"style="width: 180%; margin-left:-180px;">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 id="spot-title"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div class="modal-body">
-                <p><span id='spot-name'></span></p>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                        <a class="image-link" ><img style="height: 420px; width:500px;" id='spot-img'  src="">
+                        </a>
+                        </div>
+                        <div class="col">
+                            <h4><u>Disctrict</u></h4>
+                            <p id="spot-dist"></p> 
+                        </div>
+                    </div>
+                </div>
                 
+                <h4><u>Description</u></h4>
+                <p id="spot-desc"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
-            </div>
+          </div>
         </div>
-    </div>
+    </div> 
+
 
 
 
@@ -162,17 +173,30 @@
     <script src="{{ asset('home_page/js/scripts.js') }}"></script> <!-- Custom scripts -->   
     <script src="{{ asset('dash_board/js/style.js') }}"></script>
     <script src="{{ asset('spot/js/script.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready (function () {
-            $("body").on("click", '#show-spot', function () {
-                var spotURL = $(this).data('url');
-                $.get(spotURL, function (data) {
-                    $("#staticBackdrop") .modal("show");
-                        $("#spot-name").text(data.name);
+    <script>
+        $(document).ready(function() {
+            $('.detail-btn').click(function() {
+                const id = $(this).attr('data-id');
+                console.log(id);
+                $.ajax({
+                    url: 'spot_pop/'+id,
+                    type: 'GET',
+                    data: {
+                        "id": id
+                    },
+                success:function(data) {
+                    console.log(data);
+                    $('#spot-title').html(data.name);
+                    $('#spot-img').attr('src', 'store_pics/'+data.pictures);
+                    $('#spot-dist').html(data.districtName);
+                    
+                    $('#spot-desc').html(data.description);
+                    
+                }
                 })
             });
-
         });
 
     </script>
+    
 @endsection

@@ -26,11 +26,12 @@ class Spots extends Controller
         return view("spots",compact('spots','search','count_result'));
     }
 
-    public  function popUp($id){
-        $datas = DB::table('spots')->get();
-        $data_id = $datas->find($id);
+    public  function spot_pop($id){
+        
+        $data = DB::table('spots')->find($id);
+        
 
-        return response()->json($data_id);
+        return $data;
     }
 
 
