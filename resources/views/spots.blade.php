@@ -68,12 +68,22 @@
             <div class="container" style="margin-left:250px; margin-top:-50px;"> 
                 <div class="col-md-9 col-md-pull-3" >
                     <section class="search-result-item" >
-                        <a class="image-link" href="#"><img class="image" src="store_pics/{{$spot->pictures}}">
+                        <a class="image-link" ><img style="margin-top: 15px; margin-left:10px" class="image" src="store_pics/{{$spot->pictures}}">
                         </a>
                         <div class="search-result-item-body">
                             <div class="row">
                                 <div class="col-sm-9">
-                                    <h4 class="search-result-item-heading">{{$spot->name}}</h4>
+                                    <h4 class="search-result-item-heading">
+                                        
+                                        <a href="javascript:void(0)" 
+                                        id='show-spot' 
+                                        data-url="{{route('spot-up',$spot->id)}}"  
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#staticBackdrop">
+                                            {{$spot->name}}
+                                        </a>
+                                        
+                                    </h4>
                                     <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->districtName}}</p>
                                     <p class="description" style=" --max-lines:3; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines); ">{{$spot->description}}</p>
                                 </div>
@@ -104,6 +114,28 @@
         {{$spots->links('pagination::bootstrap-5')}}
     </div>
 
+    <!-- Button trigger modal -->
+    
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><span id='spot-name'></span></p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
 
         
         
@@ -130,4 +162,17 @@
     <script src="{{ asset('home_page/js/scripts.js') }}"></script> <!-- Custom scripts -->   
     <script src="{{ asset('dash_board/js/style.js') }}"></script>
     <script src="{{ asset('spot/js/script.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready (function () {
+            $("body").on("click", '#show-spot', function () {
+                var spotURL = $(this).data('url');
+                $.get(spotURL, function (data) {
+                    $("#staticBackdrop") .modal("popUp");
+                        $("#spot-name").text(data.name);
+                })
+            });
+
+        });
+
+    </script>
 @endsection

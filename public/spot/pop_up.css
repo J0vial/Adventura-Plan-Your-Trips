@@ -1,0 +1,12 @@
+body { 
+    padding-right: 0 !important
+}
+
+.modal-body{
+    height: 350px;
+    overflow:hidden;
+}
+.modal-body:hover{
+    overflow-y: auto;
+
+}

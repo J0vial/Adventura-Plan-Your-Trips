@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOption\None;
+use PhpParser\Builder\Function_;
 
 class Spots extends Controller
 {
@@ -25,7 +26,12 @@ class Spots extends Controller
         return view("spots",compact('spots','search','count_result'));
     }
 
-    
+    public  function popUp($id){
+        $datas = DB::table('spots')->get();
+        $data_id = $datas->find($id);
+
+        return response()->json($data_id);
+    }
 
 
 

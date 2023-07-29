@@ -30,6 +30,7 @@ Route::get("/dashboard",[AuthController::class,'dashboard'])->middleware('isLogg
 Route::get('/logout',[AuthController::class,'logout']);
 
 Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
+Route::get('spot-pop/{id}',[Spots::class,'popUp'])->name('spot-up');;
 
 
 Route::get('/trips',[trips::class,'trip_plan']);
