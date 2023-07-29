@@ -51,7 +51,7 @@
                                         <img class="card-image" src="store_pics/{{$item->pictures}}" alt="alternative">
                                         
                                         <div class="card-body">
-                                            <div class="testimonial-text">{{ $item->description }}</div>
+                                            <div class="testimonial-text" style=" --max-lines:5; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines);">{{ $item->description }}</div>
                                             
                                         </div>
                                         

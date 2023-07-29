@@ -167,7 +167,7 @@
             $("body").on("click", '#show-spot', function () {
                 var spotURL = $(this).data('url');
                 $.get(spotURL, function (data) {
-                    $("#staticBackdrop") .modal("popUp");
+                    $("#staticBackdrop") .modal("show");
                         $("#spot-name").text(data.name);
                 })
             });
