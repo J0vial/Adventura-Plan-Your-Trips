@@ -33,4 +33,5 @@ Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
 Route::get('spot_pop/{id}',[Spots::class,'spot_pop'])->name('spot_pop');
 
 
-Route::get('/trips',[trips::class,'trip_plan']);
+Route::get('/trips',[trips::class,'trip_plan'])->name('trips');
+Route::post('/gettransportType',[trips::class,'transportType'])->name('gettransportType');
