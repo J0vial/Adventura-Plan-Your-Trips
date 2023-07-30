@@ -61,18 +61,6 @@
                 });
             });
         });
-        $(document).ready(function() {
-            $('#transportations').change(function(){
-                let tid = $(this).val();
-                $.ajax({
-                    url:'/gettransport',
-                    type:'post',
-                    data:'tid='+tid+'&_token={{csrf_token()}}',
-                    success:function(result){
-                        $('#transportation').html(result)
-                    }
-                });
-            });
-        });
+        
     </script>
 @endsection

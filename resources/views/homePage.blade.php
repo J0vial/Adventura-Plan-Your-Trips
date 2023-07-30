@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2>Places</h2>
-                    <p class="p-heading">Our clients are our partners and we can not imagine a better future for our company without helping them reach their objectives</p>
+                    <p class="p-heading">Find your Favourite Spots</p>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
             <div class="row">

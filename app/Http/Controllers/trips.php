@@ -19,14 +19,17 @@ class trips extends Controller
         $types = DB::table('transportations')
         ->join('spots','transportations.spots_id','=','spots.id')
         ->where('spots.id',$cid)
+        ->select('transportations.id as transportation_id', 'transportations.type')
         ->get();
-        $types_grp = $types->groupBy('transportations.types');
+        
         
         $html = '<option value="">--transportation type--</option>';
         foreach($types as $type){
-            $html.= '<option value="'.$type->spots_id.'">'.$type->type.'</option>';
-            echo $html;
+            $html.= '<option value="'.$type->transportation_id.'">'.$type->type.'</option>';
         }
+        echo $html;
+        
+        
     }
 
 }
