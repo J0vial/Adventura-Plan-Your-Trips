@@ -80,12 +80,13 @@
                                     
                                         
                                     </h4>
-                                    <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->districtName}}</p>
+                                    <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->disName}}</p>
                                     <p class="description" style=" --max-lines:3; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines); ">{{$spot->description}}</p>
                                 </div>
                             </div>
                         </div>
                     </section>
+                    
                 </div>
             </div>
             <hr style="background-color: black; width:53%; margin-left:20%;">
@@ -129,7 +130,9 @@
                         </div>
                         <div class="col">
                             <h4><u>Disctrict</u></h4>
-                            <p id="spot-dist"></p> 
+                            <p id="spot-dist"></p>
+                            <h4><u>Transports</u></h4>
+                            <p id="spot-transp"></p>  
                         </div>
                     </div>
                 </div>
@@ -185,11 +188,12 @@
                         "id": id
                     },
                 success:function(data) {
-                    console.log(data);
+                    console.log(data.transports);
+                    
                     $('#spot-title').html(data.name);
                     $('#spot-img').attr('src', 'store_pics/'+data.pictures);
-                    $('#spot-dist').html(data.districtName);
-                    
+                    $('#spot-dist').html(data.disName);
+                    $('#spot-transp').html(data.transports);
                     $('#spot-desc').html(data.description);
                     
                 }

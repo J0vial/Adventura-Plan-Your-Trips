@@ -17,10 +17,9 @@ return new class extends Migration
             $table->string('description');
             $table->string('pictures');
             $table->string('longitude and latitude');
-            $table->string('districtName');
-            $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('transportations_id')->constrained()->cascadeOnDelete();
-        });
+	        $table->foreignId('districts_id')->constrained()->cascadeOnDelete();
+   
+        }); 
     }
 
     /**

@@ -9,7 +9,9 @@ class trips extends Controller
 {
     public function trip_plan(Request $request){
         $data = DB::table('spots')
-        ->orderBy('districtName')
+        ->join('districts','spots.districts_id','=','districts.id')
+        ->select('spots.*','districts.name as disName')
+        ->orderBy('disName')
         ->get();
         
         return view('trip_planner',compact('data'));
@@ -26,8 +28,9 @@ class trips extends Controller
         $html = '<option value="">--transportation type--</option>';
         foreach($types as $type){
             $html.= '<option value="'.$type->transportation_id.'">'.$type->type.'</option>';
+            
         }
-        echo $html;
+        printf($html);
         
         
     }

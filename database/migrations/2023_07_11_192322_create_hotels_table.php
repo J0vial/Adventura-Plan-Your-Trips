@@ -15,13 +15,12 @@ return new class extends Migration
             
             $table->id();
             $table->string('name');
-            $table->string('spot_name');
-            $table->string('dist_name');
             $table->string('price');
             $table->string('vacancy');
             $table->string('longitude and latitude');
-            $table->foreignId('usersreviews_id')->constrained()->cascadeOnDelete();
-        });
+	        $table->foreignId('spots_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('districts_id')->constrained()->cascadeOnDelete();
+        });   
     }
 
     /**

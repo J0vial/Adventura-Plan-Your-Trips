@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('transport_name');
             $table->string('type');
             $table->string('cost');
-        });
+	        $table->foreignId('spots_id')->constrained()->cascadeOnDelete();
+        });   
     }
 
     /**

@@ -16,22 +16,45 @@ class Spots extends Controller
         $spots = 0;
         if ($search != "" ){
             
-            $spots = DB::table('spots')->where('name','LIKE','%'.$search.'%')->orWhere('districtName','LIKE','%'.$search.'%')->paginate(7);
+            $spots = DB::table('spots')
+            ->join('districts','spots.districts_id','=','districts.id')
+            ->select('spots.*','districts.name as disName')
+            ->where('spots.name','LIKE','%'.$search.'%')
+            ->orWhere('districts.name','LIKE','%'.$search.'%')
+            ->paginate(7);
 
-            $count_result = DB::table('spots')->where('name','LIKE','%'.$search.'%')->orWhere('districtName','LIKE','%'.$search.'%')->count();
+            $count_result = DB::table('spots')
+            ->join('districts','spots.districts_id','=','districts.id')
+            ->where('spots.name','LIKE','%'.$search.'%')
+            ->orWhere('districts.name','LIKE','%'.$search.'%')
+            ->count();
+            
             
         }else{
-            $spots = DB::table('spots')->paginate(7);
+            $spots = DB::table('spots')
+            ->join('districts','spots.districts_id','=','districts.id')
+            ->select('spots.*','districts.name as disName')
+            ->paginate(7);
         }
         return view("spots",compact('spots','search','count_result'));
     }
 
     public  function spot_pop($id){
         
-        $data = DB::table('spots')->find($id);
+        $data = DB::table('spots')
+        ->join('districts','spots.districts_id','=','districts.id')
+        ->leftjoin('transportations','spots.id','=','transportations.spots_id')
+        ->where('spots.id','=',$id)
+        ->select('spots.*','districts.name as disName',DB::raw('GROUP_CONCAT(transportations.transport_name) as  transports'))
+        ->groupBy('spots.name','spots.id','spots.description','spots.pictures','spots.longitude and latitude','spots.districts_id','districts.name')
+        ->first();
         
+        
+        
+        
+        return response()->json($data);
 
-        return $data;
+        
     }
 
 
