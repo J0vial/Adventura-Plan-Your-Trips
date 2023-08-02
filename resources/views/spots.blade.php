@@ -133,6 +133,7 @@
                             <p id="spot-dist"></p>
                             <h4><u>Transports</u></h4>
                             <p id="spot-transp"></p>  
+                            <p id="spot-type"></p>
                         </div>
                     </div>
                 </div>
@@ -180,7 +181,7 @@
         $(document).ready(function() {
             $('.detail-btn').click(function() {
                 const id = $(this).attr('data-id');
-                console.log(id);
+                
                 $.ajax({
                     url: 'spot_pop/'+id,
                     type: 'GET',
@@ -188,13 +189,37 @@
                         "id": id
                     },
                 success:function(data) {
-                    console.log(data.transports);
                     
-                    $('#spot-title').html(data.name);
-                    $('#spot-img').attr('src', 'store_pics/'+data.pictures);
-                    $('#spot-dist').html(data.disName);
-                    $('#spot-transp').html(data.transports);
-                    $('#spot-desc').html(data.description);
+                    
+                    $('#spot-title').html(data[0].name);
+                    $('#spot-img').attr('src', 'store_pics/'+data[0].pictures);
+                    $('#spot-dist').html(data[0].disName);  
+                    $('#spot-desc').html(data[0].description);
+
+                   const groupedTransports = {};
+                    for (const item of data) {
+                        const key = item.transportName;
+                        if (groupedTransports[key]) {
+                            groupedTransports[key].push(item.transport_type);
+                        } else {
+                            groupedTransports[key] = [item.transport_type];
+                        }
+                    }
+                    
+                    
+                    let transportsHtml = '';
+                    
+                    for (const key in groupedTransports) {
+                        
+                        const transportTypes = groupedTransports[key].join(', ');
+                        
+                        transportsHtml += `<span>${key}(${transportTypes})</span><br>`;
+                        
+                    }
+
+                    $('#spot-transp').html(transportsHtml);
+
+
                     
                 }
                 })
