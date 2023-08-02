@@ -6,7 +6,7 @@
 <link href="{{ asset('trip_planner/style.css') }}" rel="stylesheet">
 <header id="header" class="header">
     <div class="header-content">
-        <h4 style="color:aliceblue;font-size: 30px;margin-right: 650px;margin-top:10px;">DISTRICT </h4>
+        <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:10px;">DISTRICT </h4>
         <div class="select">
 
             <select class="form-select" aria-label="Default select example" id='place'>
@@ -18,7 +18,7 @@
                 @endforeach  
             </select> 
         </div>
-        <h4 style="color:aliceblue;font-size: 30px;margin-right: 650px;margin-top:15px;">SPOT</h4>
+        <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;">SPOT</h4>
         <div class="select">
             <select class="form-select" aria-label="Default select example" id='spot'>
                 <option value="">
@@ -26,7 +26,7 @@
                 </option>
             </select>
         </div>
-        <h4 style="color:aliceblue;font-size: 30px;margin-right: 650px;margin-top:15px;"> HOTEL </h4>
+        <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> HOTEL </h4>
         <div class="select">
             <select class="form-select" aria-label="Default select example" id='hotels'>
                 <option value="">
@@ -34,7 +34,7 @@
                 </option>
             </select>
         </div>
-        <h4 style="color:aliceblue;font-size: 30px;margin-right: 650px;margin-top:15px;"> FROM [Your Current Position] </h4>
+        <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> FROM [Your Current Position] </h4>
         <div class="select">
             <select class="form-select" aria-label="Default select example" id='from'>
                 <option value=""> -- From -- </option>  
@@ -45,7 +45,7 @@
                 @endforeach      
             </select>
         </div>
-        <h4 style="color:aliceblue;font-size: 30px;margin-right: 650px;margin-top:15px;"> TRANSPORT</h4>
+        <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> TRANSPORT</h4>
         <div class="select">            
             <select class="form-select" aria-label="Default select example" id='transportation'>
                 <option value="">
@@ -53,7 +53,7 @@
                 </option>
             </select>
         </div>
-        <h4 style="color:aliceblue;font-size: 30px;margin-right: 650px;margin-top:15px;"> FOR RETURN</h4>
+        <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> FOR RETURN</h4>
         <div class="select">            
             <select class="form-select" aria-label="Default select example" id='rtransportation'>
                 <option value="">
