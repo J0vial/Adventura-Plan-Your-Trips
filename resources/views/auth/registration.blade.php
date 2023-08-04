@@ -52,21 +52,21 @@
                 @csrf 
                 
 
-                <input type="text" placeholder="Name" name = "name" />
+                <input type="text" placeholder="Name" name = "name" value="{{ old('name')}}"/>
                 <span class ='text-danger'>@error('name') {{$message}} @enderror</span>
 
-                <input type="email" placeholder="Email" name = "email" />
+                <input type="email" placeholder="Email" name = "email" value="{{ old('email')}}"/>
                 <span class ='text-danger'>@error('email') {{$message}} @enderror</span>
                 
-                <input type="number" placeholder="PhoneNumber" name = "phone_num" />
+                <input type="number" placeholder="PhoneNumber" name = "phone_num" value="{{ old('phone_num')}}" />
                 <span class ='text-danger'>@error('phone_num') {{$message}} @enderror</span>
 
                 <input type="text" placeholder="Adress" name = "adress" />
 
-                <input type="password" placeholder="Password" name = "pass"/>
+                <input type="password" placeholder="Password" name = "pass" />
                 <span class ='text-danger'>@error('pass') {{$message}} @enderror</span>
 
-                <input type="password" placeholder="Confirm Password" name = "cpass"/>
+                <input type="password" placeholder="Confirm Password" name = "cpass" />
                 <span class ='text-danger'>@error('pass') {{$message}} @enderror</span>
                 
                 

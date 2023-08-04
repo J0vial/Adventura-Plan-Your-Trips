@@ -50,10 +50,10 @@
                 @csrf
                 <h1>Sign in</h1>
 
-                <input type="email" placeholder="Email" name = "email"  />
+                <input type="email" placeholder="Email" name = "email" value="{{ old('email')}}" />
                 <span class ='text-danger'>@error('email') {{$message}} @enderror</span>
 
-                <input type="password" placeholder="Password" name = "pass" />
+                <input type="password" placeholder="Password" name = "pass" value="{{ old('pass')}}" />
                 <span class ='text-danger'>@error('pass') {{$message}} @enderror</span>
 
 

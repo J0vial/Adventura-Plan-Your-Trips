@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 
 class trips extends Controller
@@ -12,8 +14,23 @@ class trips extends Controller
         ->select('districts.name as disName','districts.id as disId')
         ->orderBy('disName','asc')
         ->get();
+
+        $plan_data = DB::table('plannings')
+        ->where('users_id',Session::get('loginId'))
+        ->count();
+
+        $all_plan = DB::table('plannings')
+        ->join('transportations','transportations.id','=','plannings.transportations_id')
+        ->join('spots','spots.id','=','plannings.spots_id')
+        ->join('districts','districts.id','=','plannings.districts_id')
+        ->join('transportations as return_transportations', 'return_transportations.id', '=', DB::raw('plannings.return_trans'))
+        ->select('districts.name as dis_name','spots.name as spot_name','transportations.type as transport_type','transportations.transport_name as transport_name','transportations.cost as tcost','hotel_info','dayStays','return_transportations.transport_name as return_transport_name','return_transportations.type as return_transport_type','return_transportations.cost as rtcost' )
+        ->where('users_id',Session::get('loginId'))
+        ->paginate(5);
+
         
-        return view('trip_planner',compact('data'));
+        
+        return view('trip_planner',compact('data','plan_data','all_plan'));
     }
     
     public function spot(Request $request){
@@ -31,7 +48,7 @@ class trips extends Controller
             $html.= '<option value="'.$type->spots_id.'">'.$type->spot_name.'</option>';
             
         }
-        printf($html);
+        return $html;
         
         
     }
@@ -50,8 +67,8 @@ class trips extends Controller
             $html.= '<option value="'.$type->transport_id.'">'.$type->transport_name.' - '.$type->transport_type.'</option>';
             
         }
+        return $html;
         
-        printf($html);
         
         
     }
@@ -66,13 +83,44 @@ class trips extends Controller
         
         $html = '<option value="">-- Hotels --</option>';
         foreach($types as $type){
-            $html.= '<option value="'.$type->hotel_id.'">'.$type->hotel_name .' - '.$type->room_type.' - '.$type->bed_type.' - '.$type->cost.'</option>';
+            $html.= '<option value="'.$type->hotel_name .' - '.$type->room_type.' - '.$type->bed_type.' - '.$type->cost.'">'.$type->hotel_name .' - '.$type->room_type.' - '.$type->bed_type.' - '.$type->cost.'</option>';
             
         }
+        return $html;
         
-        printf($html);
         
         
     }
+    public function saveData(Request $request){
+        
+        
+
+        $user = Session::get('loginId');
+        $place_id = $request->place;
+        $spot_id = $request->spot;
+        $hotel = $request->hotel;
+        $num = $request->num;
+        
+        $transp_id = $request->transp;
+        $rtransp_id = $request->rtransp;
+        
+        
+        if(!empty($spot_id) && !empty($transp_id) && !empty($rtransp_id)){
+            $data = DB::table('plannings')
+            ->insert(['users_id'=>$user,'transportations_id'=>$transp_id,'spots_id'=>$spot_id,'districts_id'=>$place_id,'hotel_info'=>$hotel,'return_trans'=>$rtransp_id,'dayStays'=>$num]);
+            if($data){
+                return redirect('trips')->with('saved','Your Planning has been saved');
+            }
+
+        }else{
+
+            return back()->with('sorry','You cannot give go with unfilled');
+
+        }
+        
+    }     
+        
+
+
 
 }

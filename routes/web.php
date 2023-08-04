@@ -33,8 +33,11 @@ Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
 Route::get('spot_pop/{id}',[Spots::class,'spot_pop'])->name('spot_pop');
 
 
-Route::get('/trips',[trips::class,'trip_plan'])->name('trips');
+Route::get('/trips',[trips::class,'trip_plan'])->name('trips')->middleware('isLoggedIn');
 Route::post('/getspot',[trips::class,'spot'])->name('getspot');
 Route::post('/gettransportType',[trips::class,'transportType'])->name('gettransportType');
 Route::post('/gethotel',[trips::class,'hotel'])->name('hotel');
+Route::post('/confirm',[trips::class,'saveData'])->name('confirm');
+
+
 
