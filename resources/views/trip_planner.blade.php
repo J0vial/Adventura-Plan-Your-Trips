@@ -161,7 +161,7 @@
                 <td>{{$total_cost}} TK</td>
                 <td> 
                     
-                    <button name='delete' id ='delete' class="btn btn-danger" value="{{$plan->plan_id}}">Delete</button>
+                    <button name='delete'  class="btn btn-danger delete-button" value="{{$plan->plan_id}}">Delete</button>
                     
 
                 </td>
@@ -276,18 +276,19 @@
                 });
             });
             
-            $('#delete').click(function() {
-            let cid = $(this).val();
+            $('.delete-button').click(function() {
+                
+                let cid = $(this).val();
                 $.ajax({
                     url: '/delete',
                     method: 'post',
-                    data: { cid: cid, _token: '{{csrf_token()}}' },
+                    data: 'cid='+cid+'&_token={{csrf_token()}}',
                     success: function(result) {
-                        console.log(cid);
+                        
+                        $(this).closest('tr').remove();
+                        showForm();
                     },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
+                    
                 });
             });
             

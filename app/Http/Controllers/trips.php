@@ -120,9 +120,14 @@ class trips extends Controller
         
     }
     public function destroy(Request $request){
-        $id = $request->post('id');
-        dd($id );
-        return view('trip_planner');
+        $id = $request->post('cid');
+        $data = DB::table('plannings')
+        ->where('id','=',$id )
+        ->delete();
+        
+        if($data){
+            return redirect('trips')->with('deleted','Data has been deleted');
+        }
     }     
         
 
