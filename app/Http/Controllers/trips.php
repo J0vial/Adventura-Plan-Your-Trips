@@ -24,7 +24,7 @@ class trips extends Controller
         ->join('spots','spots.id','=','plannings.spots_id')
         ->join('districts','districts.id','=','plannings.districts_id')
         ->join('transportations as return_transportations', 'return_transportations.id', '=', DB::raw('plannings.return_trans'))
-        ->select('districts.name as dis_name','spots.name as spot_name','transportations.type as transport_type','transportations.transport_name as transport_name','transportations.cost as tcost','hotel_info','dayStays','return_transportations.transport_name as return_transport_name','return_transportations.type as return_transport_type','return_transportations.cost as rtcost' )
+        ->select('districts.name as dis_name','spots.name as spot_name','transportations.type as transport_type','transportations.transport_name as transport_name','transportations.cost as tcost','hotel_info','dayStays','return_transportations.transport_name as return_transport_name','return_transportations.type as return_transport_type','return_transportations.cost as rtcost','plannings.id as plan_id' )
         ->where('users_id',Session::get('loginId'))
         ->paginate(5);
 
@@ -118,6 +118,11 @@ class trips extends Controller
 
         }
         
+    }
+    public function destroy(Request $request){
+        $id = $request->post('id');
+        dd($id );
+        return view('trip_planner');
     }     
         
 

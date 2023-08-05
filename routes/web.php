@@ -38,6 +38,7 @@ Route::post('/getspot',[trips::class,'spot'])->name('getspot');
 Route::post('/gettransportType',[trips::class,'transportType'])->name('gettransportType');
 Route::post('/gethotel',[trips::class,'hotel'])->name('hotel');
 Route::post('/confirm',[trips::class,'saveData'])->name('confirm');
+Route::post('/delete',[trips::class,'destroy']);
 
 
 

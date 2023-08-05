@@ -177,6 +177,7 @@
     <script src="{{ asset('home_page/js/scripts.js') }}"></script> <!-- Custom scripts -->   
     <script src="{{ asset('dash_board/js/style.js') }}"></script>
     <script src="{{ asset('spot/js/script.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             $('.detail-btn').click(function() {
