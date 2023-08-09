@@ -52,7 +52,7 @@
             </div>
 
             <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> DAY STAYS </h4>
-            <input type="number" placeholder="stays night number" name = "num" />
+            <input style='width: 800px;height: 50px;margin-right:30px;' type="number" placeholder="stays night number" name = "num" />
 
             <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> FROM [Your Current Position] </h4>
             <div class="select">
@@ -90,13 +90,13 @@
             
         </form>
         
-        <button id="showPlansButton" style='margin-top:2%;font-size: 15px;'class="btn-solid-lg page-scroll"> Show Plans </button>
+        <button id="showPlansButton" style='margin-top:2%;font-size: 15px;'class="btn-solid-lg page-scroll hide-demo"> Show Plans </button>
         
     </div> <!-- end of header-content -->
 </header> <!-- end of header -->
 <!-- end of header -->
-<div id="yourPlans" style="display: none;">
-    <h1>Your Plans</h1>
+<div id="yourPlans" style="display: none;margin-left:100px;margin-right:100px;" class="hideDemo">
+    <h1 style="text-align: center;">Your Plans</h1>
     <table class="table table-striped">
         <thead >
             <tr>
@@ -113,60 +113,63 @@
         </thead>
             
         <tbody>
+            @if(count($all_plan)!=0)
             
-            @foreach($all_plan as $plan)
-            @php
-                $return_hotel_parts = explode(' - ', $plan->hotel_info);
-                $total_parts = count($return_hotel_parts);
+                @foreach($all_plan as $plan)
+                @php
+                    $return_hotel_parts = explode(' - ', $plan->hotel_info);
+                    $total_parts = count($return_hotel_parts);
 
-                if (is_null($return_hotel_parts)){
-                    $total_cost =  floatval($plan->tcost) +  floatval($plan->rtcost);
-                }else{
-                    $total_cost =  floatval($return_hotel_parts[$total_parts-1]) +  floatval($plan->tcost) +  floatval($plan->rtcost);
-                }
+                    if (is_null($return_hotel_parts)){
+                        $total_cost =  floatval($plan->tcost) +  floatval($plan->rtcost);
+                    }else{
+                        $total_cost =  ($plan->dayStays*(floatval($return_hotel_parts[$total_parts-1]))) +  floatval($plan->tcost) +  floatval($plan->rtcost);
+                    }
 
-            @endphp
-            <tr>
-                
-                <td>{{$plan->dis_name}}</td>
-                <td>{{$plan->spot_name}}</td>
-                @if(!empty($plan->hotel_info))
-                    <td>
+                @endphp
+                <tr>
                     
-                        @for ($i = 0; $i < $total_parts; $i++)
-                            @if ($i == 0)
-                                <b>Hotel Name :</b>  {{ $return_hotel_parts[$i] }}<br>
-                            @elseif ($i == 1 )
-                                <b>Room Type :</b>   {{ $return_hotel_parts[$i] }}<br>
-                            @elseif ($i == 2 )
-                                <b>Bed Type :</b>  {{ $return_hotel_parts[$i] }}<br>
-                            @else
-                                <b>Cost:</b>   {{ $return_hotel_parts[$i] }} TK<br>
-                            @endif
-                        @endfor
+                    <td>{{$plan->dis_name}}</td>
+                    <td>{{$plan->spot_name}}</td>
+                    @if(!empty($plan->hotel_info))
+                        <td>
+                        
+                            @for ($i = 0; $i < $total_parts; $i++)
+                                @if ($i == 0)
+                                    <b>Hotel Name :</b>  {{ $return_hotel_parts[$i] }}<br>
+                                @elseif ($i == 1 )
+                                    <b>Room Type :</b>   {{ $return_hotel_parts[$i] }}<br>
+                                @elseif ($i == 2 )
+                                    <b>Bed Type :</b>  {{ $return_hotel_parts[$i] }}<br>
+                                @else
+                                    <b>Cost:</b>   {{ $return_hotel_parts[$i] }} TK<br>
+                                @endif
+                            @endfor
+                        </td>
+                        <td>{{$plan->dayStays}} Nights</td>
+                    @else
+                        <td></td>
+                        <td></td>
+                    @endif
+                    
+                    
+                    
+                    <td><b>{{$plan->transport_name}}</b> - ({{$plan->transport_type}}) <br> 
+                    <b>Cost: </b>{{$plan->tcost}} TK </td>
+                    <td><b>{{$plan->return_transport_name}}</b> - ( {{$plan->return_transport_type}} )<br> 
+                    <b>Cost: </b>{{$plan->rtcost}} TK </td>
+                    
+                    <td>{{$total_cost}} TK</td>
+                    <td> 
+                        
+                        <button name='delete'  class="btn btn-danger delete-button" value="{{$plan->plan_id}}">Delete</button>
+                        
                     </td>
-                    <td>{{$plan->dayStays}} Nights</td>
-                @else
-                    <td></td>
-                    <td></td>
-                @endif
-                
-                
-                
-                <td><b>{{$plan->transport_name}}</b> - ({{$plan->transport_type}}) <br> 
-                <b>Cost: </b>{{$plan->tcost}}  </td>
-                <td><b>{{$plan->return_transport_name}}</b> - ( {{$plan->return_transport_type}} )<br> 
-                <b>Cost: </b>{{$plan->rtcost}} TK </td>
-                
-                <td>{{$total_cost}} TK</td>
-                <td> 
-                    
-                    <button name='delete'  class="btn btn-danger delete-button" value="{{$plan->plan_id}}">Delete</button>
-                    
-
-                </td>
-            </tr>
-            @endforeach
+                </tr>
+                @endforeach
+            @else
+                <td colspan="8" style="text-align: center;color:red;">Nothing to Show</td>
+            @endif
             
         </tbody>
     </table>
@@ -277,7 +280,7 @@
             });
             
             $('.delete-button').click(function() {
-                
+                let clickedButton = $(this);
                 let cid = $(this).val();
                 $.ajax({
                     url: '/delete',
@@ -285,21 +288,30 @@
                     data: 'cid='+cid+'&_token={{csrf_token()}}',
                     success: function(result) {
                         
-                        $(this).closest('tr').remove();
+                        clickedButton.closest('tr').remove();
                         showForm();
                     },
                     
                 });
             });
+            function toggleTableAndScroll() {
+                const table = document.getElementById('yourPlans');
+                if (table.style.display === 'none') {
+                    table.style.display = 'block';
+                } else {
+                    table.style.display = 'none';
+                }
+                table.scrollIntoView({ behavior: 'smooth' }); // Scroll to the "Your Plans" section
+        }
+
+        // Add event listener to the "Show Plans" button
+        document.getElementById('showPlansButton').addEventListener('click', toggleTableAndScroll);
+
+
             
         });
-        // Delete function
         
-        function showForm() {
-            
-            document.getElementById('yourPlans').style.display = 'block';
-        }
-        document.getElementById('showPlansButton').addEventListener('click', showForm);
+        
 
      
     </script>
