@@ -285,12 +285,24 @@
                     data: 'cid='+cid+'&_token={{csrf_token()}}',
                     success: function(result) {
                         
-                        $(this).closest('tr').remove();
-                        showForm();
+                        loadTableData();
+                        
                     },
                     
                 });
             });
+           
+            function loadTableData() {
+                $.ajax({
+                    url: '/gettabledata', // Replace with the actual route that returns table data
+                    type: 'get',
+                    success: function(data) {
+                        // Replace the table body with the updated data
+                        $('#yourPlans').html(data);
+                    },
+                    
+                });
+            }
             
         });
         // Delete function

@@ -39,6 +39,7 @@ Route::post('/gettransportType',[trips::class,'transportType'])->name('gettransp
 Route::post('/gethotel',[trips::class,'hotel'])->name('hotel');
 Route::post('/confirm',[trips::class,'saveData'])->name('confirm');
 Route::post('/delete',[trips::class,'destroy'])->name('delete');
+Route::get('/gettabledata',[trips::class,'tabledata'])->name('gettabledata');
 
 
 

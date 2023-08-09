@@ -128,7 +128,17 @@ class trips extends Controller
         if($data){
             return redirect('trips')->with('deleted','Data has been deleted');
         }
-    }     
+    }
+    
+    public function tabledata(Request $request){
+        
+        $all_value = DB::table('plannings')
+        ->get();
+        
+        
+        return view('trip_planner', compact('all_value'));
+    }
+    
         
 
 
