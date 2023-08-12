@@ -24,15 +24,31 @@ class AuthController extends Controller
         ]);
 
         $user = DB::table('users')->where('email', $request->email)->first();
+        
+        
 
         if ($user){
-            if (Hash::check($request->pass, $user->pass)){
+            $type = DB::table('users')->where('email', $request->email)->where('user_type', 'user')->first();
+            
+            if ($type == 'user'){
+                if (Hash::check($request->pass, $user->pass)){
 
-                $request->session()->put('loginId', $user->id);
-                return redirect('dashboard');
+                    $request->session()->put('loginId', $user->id);
+                    return redirect('dashboard');
 
-            }else{
-                return back()->with('fail','Password not match or do not have any email');
+                }else{
+                    return back()->with('fail','Password not match or do not have any email');
+                }
+            }elseif($type == null){
+                if ($request->pass == $user->pass){
+
+                    $request->session()->put('loginId', $user->id);
+                    return redirect('admin');
+
+                }else{
+                    return back()->with('fail','Password not match or do not have any email');
+                }
+
             }
 
         }else{

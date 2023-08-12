@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
@@ -99,11 +100,12 @@ class trips extends Controller
         $place_id = $request->place;
         $spot_id = $request->spot;
         $hotel = $request->hotel;
-        $num = $request->num;
         
+        $num = (Carbon::parse(($request->date_picker1)))->diffInDays(Carbon::parse($request->date_picker2));
         $transp_id = $request->transp;
         $rtransp_id = $request->rtransp;
-        
+
+        dd($num);
         
         if(!empty($spot_id) && !empty($transp_id) && !empty($rtransp_id)){
             $data = DB::table('plannings')

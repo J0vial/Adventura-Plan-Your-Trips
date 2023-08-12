@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomePage;
@@ -40,6 +41,14 @@ Route::post('/gethotel',[trips::class,'hotel'])->name('hotel');
 Route::post('/confirm',[trips::class,'saveData'])->name('confirm');
 Route::post('/delete',[trips::class,'destroy'])->name('delete');
 Route::get('/gettabledata',[trips::class,'tabledata'])->name('gettabledata');
+
+
+
+
+Route::get('/admin',[admin::class,'loginAdmin'])->middleware('isLoggedIn');
+
+
+
 
 
 
