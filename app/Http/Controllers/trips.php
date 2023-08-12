@@ -60,12 +60,12 @@ class trips extends Controller
         ->join('transportations','districts.id','=','transportations.districts_id')
         ->where('transportations.spots_id',$cid)
         ->where('transportations.districts_id',$fid)
-        ->select('transportations.id as transport_id','transportations.type as transport_type','transportations.transport_name as transport_name')
+        ->select('transportations.id as transport_id','transportations.type as transport_type','transportations.transport_name as transport_name','transportations.time as ttime','transportations.date as tdate')
         ->get();
         
         $html = '<option value="">-- Trasnportations --</option>';
         foreach($types as $type){
-            $html.= '<option value="'.$type->transport_id.'">'.$type->transport_name.' - '.$type->transport_type.'</option>';
+            $html.= '<option value="'.$type->transport_id.'">'.$type->transport_name.' - '.$type->transport_type.' - Time('.$type->ttime.') - '.$type->tdate.'</option>';
             
         }
         return $html;
@@ -79,7 +79,7 @@ class trips extends Controller
         ->join('hotels','hotels.id','=','hotelrooms.hotels_id')
         ->where('spots_id',$cid)
         ->select('hotels.id as hotel_id','Room type as room_type','hotels.name as hotel_name','hotelrooms.bed_type',
-        'hotelrooms.cost',)
+        'hotelrooms.cost')
         ->get();
         
         $html = '<option value="">-- Hotels --</option>';
@@ -105,12 +105,14 @@ class trips extends Controller
         $transp_id = $request->transp;
         $rtransp_id = $request->rtransp;
 
-        dd($num);
+        
         
         if(!empty($spot_id) && !empty($transp_id) && !empty($rtransp_id)){
             $data = DB::table('plannings')
             ->insert(['users_id'=>$user,'transportations_id'=>$transp_id,'spots_id'=>$spot_id,'districts_id'=>$place_id,'hotel_info'=>$hotel,'return_trans'=>$rtransp_id,'dayStays'=>$num]);
             if($data){
+
+
                 return redirect('trips')->with('saved','Your Planning has been saved');
             }
 
