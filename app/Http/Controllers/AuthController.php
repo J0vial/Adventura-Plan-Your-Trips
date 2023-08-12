@@ -28,16 +28,18 @@ class AuthController extends Controller
         
 
         if ($user){
-            $type = DB::table('users')->where('email', $request->email)->where('user_type', 'user')->first();
+            $type = DB::table('users')->where('email', $request->email)->where('user_type', 'user')->select('user_type')->first();
             
-            if ($type == 'user'){
-                if (Hash::check($request->pass, $user->pass)){
+            if ($type!=null){
+                if ($type->user_type == 'user' ){
+                    if (Hash::check($request->pass, $user->pass)){
 
-                    $request->session()->put('loginId', $user->id);
-                    return redirect('dashboard');
+                        $request->session()->put('loginId', $user->id);
+                        return redirect('dashboard');
 
-                }else{
-                    return back()->with('fail','Password not match or do not have any email');
+                    }else{
+                        return back()->with('fail','Password not match or do not have any email');
+                    }
                 }
             }elseif($type == null){
                 if ($request->pass == $user->pass){
@@ -50,6 +52,7 @@ class AuthController extends Controller
                 }
 
             }
+            
 
         }else{
             return back()->with('fail','This email not found');
