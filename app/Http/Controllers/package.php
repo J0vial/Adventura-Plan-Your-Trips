@@ -38,14 +38,10 @@ class package extends Controller
             ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name')
             ->paginate(5);
         }
-        $user_pack=array();
-        $user_pack = DB::table('user_packages')
-        ->where('users_id',Session::get('loginId'))
-        ->select('packages_id')
-        ->get();
         
         
-        return view("package",compact('search','count_result','package','user_pack'));
+        
+        return view("package",compact('search','count_result','package'));
         //
     }
     public function saveData($id){

@@ -97,26 +97,14 @@
                                         <td>{{$packages->transport_name}}</td>
                                         <td>{{$packages->staying}}</td>
                                         <td>{{$packages->price}}</td>
+
+                                       
+                                        
                                         <form action="{{route('confirm_pack',['id' => $packages->id])}}" method="POST">
-        
-
                                             @csrf
-
-                                            @php
-                                                $boolean=false;
-                                            @endphp
-                                            @foreach($user_pack as $pac)
-                                                @if ($pac->packages_id!=$packages->id)
-                                                    @php
-                                                        $boolean=true;
-                                                    @endphp
-                                                @endif
-                                            @endforeach
-                                            @if ($boolean==false)
-                                                <td><button class="button" >Book</button></td>
-                                            @else
-                                                <td><button class="button" >Unbook</button></td>
-                                            @endif
+                                            <td><button class="button" >Book</button></td>
+                                            
+                                        
                                         </form>
                                     </tr>
                                     @endforeach
