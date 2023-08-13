@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomePage;
 use App\Http\Controllers\Spots;
 use App\Http\Controllers\trips;
+use App\Http\Controllers\package;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::post('/delete',[trips::class,'destroy'])->name('delete');
 Route::get('/gettabledata',[trips::class,'tabledata'])->name('gettabledata');
 
 
+Route::get('/package',[package::class,'package'])->middleware('isLoggedIn');
+Route::post('/confirm_pack/{id}',[package::class,'saveData'])->name('confirm_pack');
 
 
 Route::get('/admin',[admin::class,'loginAdmin'])->middleware('isLoggedIn');

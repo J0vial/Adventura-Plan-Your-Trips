@@ -40,6 +40,9 @@
             <li class="nav-item">
                 <a class="nav-link page-scroll" href="#projects">REVIEW</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link page-scroll" href="package">PACKAGE</a>
+            </li>
         </ul>
     </div>
 </nav> <!-- end of navbar -->
