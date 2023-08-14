@@ -18,7 +18,8 @@ class package extends Controller
             ->join('spots','spots.id','=','packages.spots_id')
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
-            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name')
+            ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
+            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid')
             ->where('spots.name','LIKE','%'.$search.'%')
             ->paginate(5);
         
@@ -35,7 +36,8 @@ class package extends Controller
             ->join('spots','spots.id','=','packages.spots_id')
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
-            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name')
+            ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
+            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid')
             ->paginate(5);
         }
         
