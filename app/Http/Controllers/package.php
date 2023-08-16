@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class package extends Controller
 {
-    public function package(Request $request){
+    public function packages(Request $request){
         $search = $request['search'] ?? ""; // check null search or what
         $count_result = array();
         $package = 0;
@@ -19,7 +19,7 @@ class package extends Controller
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
             ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
-            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid')
+            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum')
             ->where('spots.name','LIKE','%'.$search.'%')
             ->paginate(5);
         
@@ -37,14 +37,15 @@ class package extends Controller
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
             ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
-            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid')
+            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum')
             ->paginate(5);
         }
         
         
         
         return view("package",compact('search','count_result','package'));
-        //
+        
+//
     }
     public function saveData($id){
         $user = Session::get('loginId');
@@ -52,6 +53,34 @@ class package extends Controller
         ->insert(['users_id'=>$user,'packages_id'=>$id]);
         if ($data){
             return redirect('package')->with('saved','Your Package has been saved');
+        }
+        
+    }
+
+    public function payment($id){      
+        return view('payment',compact('id'));
+        
+        
+    }
+    public function transaction(Request $request){ 
+        $request->validate([
+
+            'num'=>'required',
+            'transaction'=>'required',
+            'id'=>'required',
+            
+
+        ]); 
+        $id= $request->id; 
+        
+        $saved = DB::table('user_packages')
+        ->where('id',$id)
+        ->update([
+            'phonNum' => $request->num,
+            'transactionId' => $request->transaction,          
+        ]);
+        if ($saved) {
+         return redirect('package')->with('done','Submitted the payment info');
         }
         
     }

@@ -44,8 +44,10 @@ Route::post('/delete',[trips::class,'destroy'])->name('delete');
 Route::get('/gettabledata',[trips::class,'tabledata'])->name('gettabledata');
 
 
-Route::get('/package',[package::class,'package'])->middleware('isLoggedIn');
+Route::get('/package',[package::class,'packages'])->name('package')->middleware('isLoggedIn');
 Route::post('/confirm_pack/{id}',[package::class,'saveData'])->name('confirm_pack');
+Route::get('/payment/{id}',[package::class,'payment'])->name('payment');
+Route::post('/transaction',[package::class,'transaction'])->name('transaction');
 
 
 Route::get('/admin',[admin::class,'loginAdmin'])->middleware('isLoggedIn');

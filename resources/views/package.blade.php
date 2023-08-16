@@ -32,8 +32,20 @@
     <header id="header" class="header" >
         <div class="header-content" >
         @if(Session::has('saved'))
-            <div class = "alert alert-success">{{session::get('saved')}}</div>
+            <div id='sess' ></div>
+        @elseif (Session::has('done'))
+            <div id='paid' ></div>
         @endif
+        <script>
+            document.getElementById('sess').innerHTML="<div id='sess' class = 'alert alert-success'>{{session::get('saved')}}</div>"; 
+            setTimeout(function() {
+                document.getElementById('sess').innerHTML='';},5000)
+        </script> 
+        <script>
+            document.getElementById('paid').innerHTML='<div id="paid" class = "alert alert-success">{{session::get("done")}}</div>'; 
+            setTimeout(function() {
+                document.getElementById('paid').innerHTML='';},5000)
+        </script> 
             <div class="container" >
                 <div class="row">
                     <div class="col-lg-12">
@@ -41,6 +53,7 @@
                         <form action="">
                             <div class="input-box" style="margin-left:100px; margin-top:50px">
                                 <i class="uil uil-search"></i>
+
                                 <input  value="{{$search}}" name ="search" type="search" placeholder="Search here..." />
                                 <button class="button">Search</button>
                             </div>
@@ -48,6 +61,7 @@
                     </div> <!-- end of col -->
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
+        
         @if ($count_result == 0)
             <div id='alrt'  style="width:50%;margin-top:5%; margin-left:23%;">
             </div>
@@ -98,10 +112,15 @@
                                                 <td>{{$packages->transport_name}}</td>
                                                 <td>{{$packages->staying}}</td>
                                                 <td>{{$packages->price}}</td>
+                                                
 
                                                 @if($packages->Pid == $packages->id && Session::get('loginId')== $packages->uid)
                                                 
-                                                    <td><button style='width:130%' type="button" class="btn-solid-lg page-scroll" data-toggle="modal" data-target="#exampleModal" data-whatever="">Confirm Payment</button></td>                                                       
+                                                    @if ($packages->pnum==null)
+                                                        <td><a href="{{ route('payment', ['id' => $packages->upid]) }}"><button style='width:130%' type="button" class="btn-solid-lg page-scroll"  >Confirm Pay</button></a></td>  
+                                                    @else 
+                                                        <td>Waiting for confirmation</td>
+                                                    @endif                                                     
                                                 @else
                                                     
                                                     <form action="{{ route('confirm_pack', ['id' => $packages->id]) }}" method="POST">
@@ -144,33 +163,9 @@
         {{$package->links('pagination::bootstrap-5')}}
     </div>
 
-    <!-- Button trigger modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 id="exampleModalLabel">Payment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient Phone No:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                        <label for="recipient-name" class="col-form-label">Transaction Id:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Confirm</button>
-            </div>
-        </div>
-    </div>
-    </div>
+
+
+    <
 
         
         
@@ -198,17 +193,9 @@
     <script src="{{ asset('dash_board/js/style.js') }}"></script>
     <script src="{{ asset('spot/js/script.js') }}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>
-        $('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var recipient = button.data('whatever') // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this)
-            modal.find('.modal-title').text('New message to ' + recipient)
-            modal.find('.modal-body input').val(recipient)
-            })
-    </script>
+    
+
     
     
 @endsection
+
