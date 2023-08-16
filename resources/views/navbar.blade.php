@@ -35,7 +35,7 @@
                 <a class="nav-link page-scroll" href="trips">TRIP PLAN</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#callMe">HOTELS</a>
+                <a class="nav-link page-scroll" href="hotels">HOTELS</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link page-scroll" href="#projects">REVIEW</a>

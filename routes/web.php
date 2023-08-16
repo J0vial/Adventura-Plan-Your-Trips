@@ -4,6 +4,7 @@ use App\Http\Controllers\admin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomePage;
+use App\Http\Controllers\hotels;
 use App\Http\Controllers\Spots;
 use App\Http\Controllers\trips;
 use App\Http\Controllers\package;
@@ -33,6 +34,9 @@ Route::get('/logout',[AuthController::class,'logout']);
 
 Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
 Route::get('spot_pop/{id}',[Spots::class,'spot_pop'])->name('spot_pop');
+
+
+Route::get('/hotels',[hotels::class,'hotel_page'])->middleware('isLoggedIn');
 
 
 Route::get('/trips',[trips::class,'trip_plan'])->name('trips')->middleware('isLoggedIn');
