@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user_packages', function (Blueprint $table) {
-            $table->string('payment')->default('unpaid');
+            $table->string('payment')->default('wait for confirmation');
             $table->text('phonNum')->nullable();
             $table->text('transactionId')->nullable();//
         });

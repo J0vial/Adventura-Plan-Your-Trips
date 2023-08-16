@@ -119,7 +119,7 @@
                                                     @if ($packages->pnum==null)
                                                         <td><a href="{{ route('payment', ['id' => $packages->upid]) }}"><button style='width:130%' type="button" class="btn-solid-lg page-scroll"  >Confirm Pay</button></a></td>  
                                                     @else 
-                                                        <td>Waiting for confirmation</td>
+                                                        <td>{{$packages->pay}}</td>
                                                     @endif                                                     
                                                 @else
                                                     

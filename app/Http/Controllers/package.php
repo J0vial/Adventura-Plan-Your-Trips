@@ -19,7 +19,7 @@ class package extends Controller
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
             ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
-            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum')
+            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum','user_packages.payment as pay')
             ->where('spots.name','LIKE','%'.$search.'%')
             ->paginate(5);
         
@@ -37,7 +37,7 @@ class package extends Controller
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
             ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
-            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum')
+            ->select('packages.*','spots.name as spotName','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum','user_packages.payment as pay')
             ->paginate(5);
         }
         
