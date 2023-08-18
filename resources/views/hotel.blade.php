@@ -72,7 +72,7 @@
             <div class="container" style="margin-left:250px; margin-top:-50px;"> 
                 <div class="col-md-9 col-md-pull-3" >
                     <section class="search-result-item" >
-                        <a class="image-link" ><img style="margin-top: 15px; margin-left:10px" class="image" src="">
+                        <a class="image-link" ><img style="margin-top: 15px; margin-left:10px;" class="image" src="store_pics/{{$hotel->pictures}}">
                         </a>
                         <div class="search-result-item-body">
                             <div class="row">
@@ -84,11 +84,28 @@
                                     
                                         
                                     </h4>
-                                    <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$hotel->disName}} || Near {{$hotel->spotName}}</p>
-                                    <p class="info">Room Type : {{$hotel->roomType}} || Bed Type : {{$hotel->betype}}</p>
-                                    <p class="info">Available rooms: {{$hotel->rno}} </p>
-                                    <p class="info">Cost: {{$hotel->cost}} Taka</p>
-                                    <a href="" class="detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{$hotel->id}}"><button>MAP</button></a>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$hotel->disName}} || Near {{$hotel->spotName}}</p>
+                                                <p class="info">Room Type : {{$hotel->roomType}} || Bed Type : {{$hotel->betype}}</p>
+                                                <p class="info">Available rooms: {{$hotel->rno}} </p>
+                                                <p class="info">Cost: {{$hotel->cost}} Taka</p>
+                                                <a href="" class="btn-solid-lg page-scroll detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{$hotel->id}}">Map</a>
+                                            </div>
+                                            <div class="col">
+                                                <label for="message-text" class="col-form-label">Comment:</label>
+                                                
+                                                <textarea class="form-control message-text" name ='message_text' id="message_text"></textarea>
+                                                <br>
+                                                
+                                                <button type="submit" class="btn-solid-lg page-scroll add-button" value='{{$hotel->id}},{{Session::get("loginId")}}'>Add Comment</button>
+                                                <br>
+                                                <a href=""  class="detail-btn2" data-toggle="modal" data-target="#exampleModal" data-id="{{$hotel->id}}">See all Comments</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                     
                                 </div>
                             </div>
@@ -143,6 +160,26 @@
           </div>
         </div>
     </div> 
+
+    <!-- Button trigger modal comments  -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comment-widgets" id='comments-container'>
+
+                    </div> <!-- Card -->
+                 </div>
+            </div> 
+        </div>
+    </div>
+
     
         
     
@@ -195,6 +232,66 @@
                 } 
                    
                 })
+            });
+
+            $('.detail-btn2').click(function(event) {
+                event.preventDefault();
+                const id = $(this).attr('data-id');
+                
+                $.ajax({
+                    url: 'view_comment_hotel/'+id,
+                    type: 'GET',
+                    data: {
+                        "id": id
+                    },
+                success:function(data) {
+                    $('#comments-container').empty();
+                    
+                    for (var i = 0; i < data.length; i++) {
+                        const commentHtml = ` 
+                        
+                        <div class="d-flex flex-row comment-row m-t-0">
+                            <div class="comment-text w-100">
+                                <h6 class="font-medium">${data[i].uname}</h6>
+                                <span class="m-b-15 d-block">${data[i].hotel_review}</span>
+                                <div class="comment-footer">
+                                    <span class="text-muted float-right">${data[i].time_difference}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    $('#comments-container').append(commentHtml);
+                }
+                }
+                })
+            });
+
+
+            $('.add-button').click(function() {
+                
+                let id = $(this).val().split(",");
+                sid=id[0];
+                uid = id[1];
+                
+                let messageTextarea = $(this).closest('.form-group').find('.message-text');
+                let message = messageTextarea.val();
+                
+                if (message.trim() === '') {
+                    alert('Please enter a comment before submitting.');
+                    return;
+                }
+                $.ajax({
+                    url: 'add_comment_hotel/',
+                    method: 'post',
+                    data: 'sid='+sid+'&uid='+uid+'&message='+message+'&_token={{csrf_token()}}',
+                    success: function(result) {
+                        alert('Comment added successfully');
+
+                        messageTextarea.val('');
+                        
+                        
+                    },
+                    
+                });
             });
         });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,16 +58,19 @@ class Spots extends Controller
     }
 
 
-    public  function add_comment($id,$spot_id,Request $request){
+    public  function add_comment(Request $request){
+        $mytime = Carbon::now()->timezone('Asia/Dhaka');
+        $uid = $request->post('uid');
+        $sid = $request->post('sid');
+        $message = $request->post('message');
         
-        $message = $request->message_text;
-        $data = DB::table('usersreviews')
-        ->insert(['users_id'=>$id,'spots_id' =>$spot_id,'destination_review'=>$message]);
-        if($data){
+       $data = DB::table('usersreviews')
+       ->insert(['users_id'=>$uid,'spots_id' =>$sid,'destination_review'=>$message,'created_at'=>$mytime]);
+       if($data){
 
 
-            return redirect('spots')->with('save_com','Your Planning has been saved');
-        }
+            return redirect('spots');
+       }
 
         
         
@@ -80,18 +84,15 @@ class Spots extends Controller
         $data = DB::table('usersreviews')
         ->join('users','users.id','=','usersreviews.users_id')
         ->where('spots_id','=',$id)
-        ->select('destination_review','users.name as uname', DB::raw('TIME_FORMAT(TIMEDIFF(NOW(), usersreviews.created_at), "%h:%i %p") as time_difference'))
+        ->select('destination_review','users.name as uname', 'usersreviews.created_at as time_difference')
         ->get();
         
 
         return response()->json($data);
-        
-
-        
-        
-
-        
+       
     }
+
+    
 
 
     

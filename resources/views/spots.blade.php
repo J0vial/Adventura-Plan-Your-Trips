@@ -82,26 +82,22 @@
                                     </h4>
                                     <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->disName}}</p>
                                     <p class="description" style=" --max-lines:3; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines); ">{{$spot->description}}</p>
-                                    @if(Session::has('save_com'))
-                                        <div class = "alert alert-success">{{session::get('save_com')}}</div>
-                                    @endif
-                                    <form action="{{ route('add_comment',['id' => Session::get('loginId'),'spot_id'=>$spot->id]) }}" method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="message-text" class="col-form-label">Comment:</label>
-                                                    <textarea class="form-control" name ='message_text' id="message_text"></textarea>
-                                                </div>
-                                                <div class="col">
-                                                    <br>
-                                                    <br>
-                                                    <button type="submit" class="btn btn-primary">Add Comment</button>
-                                                </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="message-text" class="col-form-label">Comment:</label>
+                                                
+                                                <textarea class="form-control message-text" name ='message_text' id="message_text"></textarea>
+                                            </div>
+                                            <div class="col">
+                                                <br>
+                                                <br>
+                                                <button type="submit" class="btn-solid-lg page-scroll add-button" value='{{$spot->id}},{{Session::get("loginId")}}'>Add Comment</button>
                                             </div>
                                         </div>
-                                        
-                                    </form>
+                                    </div>
+
                                     <a href=""  class="detail-btn2" data-toggle="modal" data-target="#exampleModal" data-id="{{$spot->id}}">See all Comments</a>
                                     
                                 </div>
@@ -175,25 +171,18 @@
     <!-- Button trigger modal comments  -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" id='comments-container'>
+            <div class="modal-content" >
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="comment-widgets">
-                        <!-- Comment Row -->
-                        <div class="d-flex flex-row comment-row m-t-0">
-                            <div class="comment-text w-100">
-                                <h6 id='name' class="font-medium"></h6> <span id ='text' class="m-b-15 d-block"></span>
-                                <div class="comment-footer"> <span class="text-muted float-right" id='time'></span> </div>
-                            </div>
-                        </div> <!-- Comment Row -->
-                        
+                    <div class="comment-widgets" id='comments-container'>
+
                     </div> <!-- Card -->
-                </div>
+                 </div>
             </div> 
         </div>
     </div>
@@ -275,6 +264,8 @@
                 }
                 })
             });
+
+
             $('.detail-btn2').click(function(event) {
                 event.preventDefault();
                 const id = $(this).attr('data-id');
@@ -286,18 +277,56 @@
                         "id": id
                     },
                 success:function(data) {
-                    $('#text').empty();
-                    $('#name').empty();
-                    $('#time').empty();
+                    $('#comments-container').empty();
                     
                     for (var i = 0; i < data.length; i++) {
-                        $('#text').append(data[i].destination_review); // Use append if you want to add multiple reviews
-                        $('#name').append(data[i].uname);
-                        $('#time').append(data[i].time_difference);
-                    }
+                        const commentHtml = ` 
+                        
+                        <div class="d-flex flex-row comment-row m-t-0">
+                            <div class="comment-text w-100">
+                                <h6 class="font-medium">${data[i].uname}</h6>
+                                <span class="m-b-15 d-block">${data[i].destination_review}</span>
+                                <div class="comment-footer">
+                                    <span class="text-muted float-right">${data[i].time_difference}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    $('#comments-container').append(commentHtml);
+                }
                 }
                 })
             });
+
+
+            $('.add-button').click(function() {
+                
+                let id = $(this).val().split(",");
+                sid=id[0];
+                uid = id[1];
+               
+                
+                let messageTextarea = $(this).closest('.form-group').find('.message-text');
+                let message = messageTextarea.val();
+                
+                if (message.trim() === '') {
+                    alert('Please enter a comment before submitting.');
+                    return;
+                }
+                $.ajax({
+                    url: '/add_comment',
+                    method: 'post',
+                    data: 'sid='+sid+'&uid='+uid+'&message='+message+'&_token={{csrf_token()}}',
+                    success: function(result) {
+                        alert('Comment added successfully');
+
+                        messageTextarea.val('');
+                        
+                        
+                    },
+                    
+                });
+            });
+            
         });
 
     </script>

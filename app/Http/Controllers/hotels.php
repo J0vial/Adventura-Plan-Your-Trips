@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -56,6 +57,38 @@ class hotels extends Controller
                 
         
         return response()->json($data);
+
+        
+    }
+    public  function view_comment_hotel($id){
+        
+        
+        $data = DB::table('usersreviews')
+        ->join('users','users.id','=','usersreviews.users_id')
+        ->where('hotels_id','=',$id)
+        ->select('hotel_review','users.name as uname', 'usersreviews.created_at as time_difference')
+        ->get();
+        
+
+        return response()->json($data);
+       
+    }
+    public  function add_comment_hotel(Request $request){
+        $mytime = Carbon::now()->timezone('Asia/Dhaka');
+        $uid = $request->post('uid');
+        $sid = $request->post('sid');
+        $message = $request->post('message');
+        
+       $data = DB::table('usersreviews')
+       ->insert(['users_id'=>$uid,'hotels_id' =>$sid,'hotel_review'=>$message,'created_at'=>$mytime]);
+       if($data){
+
+
+            return redirect('hotels');
+       }
+
+        
+        
 
         
     }
