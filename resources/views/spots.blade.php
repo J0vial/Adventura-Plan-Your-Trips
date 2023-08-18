@@ -290,9 +290,11 @@
                     $('#name').empty();
                     $('#time').empty();
                     
-                    $('#text').html(data[0].destination_review);
-                    $('#name').html(data[0].uname);
-                    $('#time').html(data[0].time_difference);
+                    for (var i = 0; i < data.length; i++) {
+                        $('#text').append(data[i].destination_review); // Use append if you want to add multiple reviews
+                        $('#name').append(data[i].uname);
+                        $('#time').append(data[i].time_difference);
+                    }
                 }
                 })
             });
