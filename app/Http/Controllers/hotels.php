@@ -20,15 +20,19 @@ class hotels extends Controller
             ->join('districts','districts.id','=','hotels.districts_id')
             ->join('spots','spots.id','=','hotels.spots_id')
             ->join('hotelrooms','hotelrooms.hotels_id','=','hotels.id')
-            ->select('spots.name as spotName','districts.name as disName','hotels.*','hotelrooms.room_no as rno','hotelrooms.Room type as roomType','hotelrooms.bed_type as betype','hotelrooms.cost as cost')
+            ->select('spots.name as spotName','districts.name as disName','hotels.*','hotels.longitude and latitude as lgla','hotelrooms.room_no as rno','hotelrooms.Room type as roomType','hotelrooms.bed_type as betype','hotelrooms.cost as cost')
             ->where('hotels.name','LIKE','%'.$search.'%')
+            ->orwhere('hotelrooms.bed_type','LIKE','%'.$search.'%')
+            ->orwhere('hotelrooms.cost','LIKE','%'.$search.'%')
             ->paginate(7);
 
             $count_result = DB::table('hotels')
-            ->join('districts','districts.id','=','spots.districts_id')
+            ->join('districts','districts.id','=','hotels.districts_id')
             ->join('spots','spots.id','=','hotels.spots_id')
             ->leftJoin('hotelrooms','hotelrooms.hotels_id','=','hotels.id')
             ->where('hotels.name','LIKE','%'.$search.'%')
+            ->orwhere('hotelrooms.bed_type','LIKE','%'.$search.'%')
+            ->orwhere('hotelrooms.cost','LIKE','%'.$search.'%')
             ->count();
             
         }else{
@@ -36,11 +40,26 @@ class hotels extends Controller
             ->join('districts','districts.id','=','hotels.districts_id')
             ->join('spots','spots.id','=','hotels.spots_id')
             ->join('hotelrooms','hotelrooms.hotels_id','=','hotels.id')
-            ->select('spots.name as spotName','districts.name as disName','hotels.*','hotelrooms.room_no as rno','hotelrooms.Room type as roomType','hotelrooms.bed_type as betype','hotelrooms.cost as cost')
+            ->select('spots.name as spotName','districts.name as disName','hotels.*','hotels.longitude and latitude as lgla','hotelrooms.room_no as rno','hotelrooms.Room type as roomType','hotelrooms.bed_type as betype','hotelrooms.cost as cost')
             ->paginate(7);
         }
         return view("hotel",compact('hotels','search','count_result'));
     }
+
+    public  function map_pop($id){
+    
+        $data = DB::table('hotels')
+        ->where('id','=',$id)
+        ->select('hotels.longitude and latitude as lgla')
+        ->get();
+        
+                
+        
+        return response()->json($data);
+
+        
+    }
+    
 
     
 

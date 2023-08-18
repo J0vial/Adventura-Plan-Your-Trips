@@ -78,14 +78,18 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <h4 class="search-result-item-heading">
-                                        
-                                    <a href="" class="detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{$hotel->id}}">{{$hotel->name}}</a>
+                                      
+                                    <a >{{$hotel->name}}</a>
                                         
                                     
                                         
                                     </h4>
-                                    <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i></p>
-                                    <p class="description" style=" --max-lines:3; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines); "></p>
+                                    <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$hotel->disName}} || Near {{$hotel->spotName}}</p>
+                                    <p class="info">Room Type : {{$hotel->roomType}} || Bed Type : {{$hotel->betype}}</p>
+                                    <p class="info">Available rooms: {{$hotel->rno}} </p>
+                                    <p class="info">Cost: {{$hotel->cost}} Taka</p>
+                                    <a href="" class="detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{$hotel->id}}"><button>MAP</button></a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -114,9 +118,31 @@
     <div class="row" style="margin-left: 100px;">
         {{$hotels->links('pagination::bootstrap-5')}}
     </div>
-
-
     
+
+    <!-- Button trigger modal -->
+    <div class="modal" tabindex="-1" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content"style="width: 180%; margin-left:-180px;">
+            <div class="modal-header">
+              <h5 id="spot-title"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <iframe id='map' src="" width="800" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                   
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+    </div> 
     
         
     
@@ -151,7 +177,27 @@
     <script src="{{ asset('spot/js/script.js') }}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>
-        
+        $(document).ready(function() {
+            $('.detail-btn').click(function() {
+                const id = $(this).attr('data-id');
+                
+                $.ajax({
+                    url: 'map_pop/'+id,
+                    type: 'GET',
+                    data: {
+                        "id": id
+                    },
+                success:function(data) {
+                    
+                    $('#map').attr('src', data[0].lgla);
+                   
+                    
+                } 
+                   
+                })
+            });
+        });
+
 
     </script>
     

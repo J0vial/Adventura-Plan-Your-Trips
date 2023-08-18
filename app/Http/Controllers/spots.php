@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -57,6 +57,43 @@ class Spots extends Controller
     }
 
 
+    public  function add_comment($id,$spot_id,Request $request){
+        
+        $message = $request->message_text;
+        $data = DB::table('usersreviews')
+        ->insert(['users_id'=>$id,'spots_id' =>$spot_id,'destination_review'=>$message]);
+        if($data){
 
+
+            return redirect('spots')->with('save_com','Your Planning has been saved');
+        }
+
+        
+        
+
+        
+    }
+    
+    public  function view_comment($id){
+        
+        
+        $data = DB::table('usersreviews')
+        ->join('users','users.id','=','usersreviews.users_id')
+        ->where('spots_id','=',$id)
+        ->select('destination_review','users.name as uname', DB::raw('TIME_FORMAT(TIMEDIFF(NOW(), usersreviews.created_at), "%h:%i %p") as time_difference'))
+        ->get();
+        
+
+        return response()->json($data);
+        
+
+        
+        
+
+        
+    }
+
+
+    
 
 }

@@ -34,9 +34,12 @@ Route::get('/logout',[AuthController::class,'logout']);
 
 Route::get('/spots',[Spots::class,'spot_page'])->middleware('isLoggedIn');
 Route::get('spot_pop/{id}',[Spots::class,'spot_pop'])->name('spot_pop');
+Route::post('add_comment/{id}/{spot_id}',[Spots::class,'add_comment'])->name('add_comment');
+Route::get('view_comment/{id}',[Spots::class,'view_comment'])->name('view_comment');
 
 
 Route::get('/hotels',[hotels::class,'hotel_page'])->middleware('isLoggedIn');
+Route::get('map_pop/{id}',[hotels::class,'map_pop'])->name('map_pop');
 
 
 Route::get('/trips',[trips::class,'trip_plan'])->name('trips')->middleware('isLoggedIn');

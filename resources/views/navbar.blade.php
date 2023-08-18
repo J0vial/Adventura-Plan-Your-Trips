@@ -37,9 +37,7 @@
             <li class="nav-item">
                 <a class="nav-link page-scroll" href="hotels">HOTELS</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link page-scroll" href="#projects">REVIEW</a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link page-scroll" href="package">PACKAGE</a>
             </li>

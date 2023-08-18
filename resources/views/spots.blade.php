@@ -75,13 +75,35 @@
                                 <div class="col-sm-9">
                                     <h4 class="search-result-item-heading">
                                         
-                                    <a href="" class="detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{ $spot->id }}">{{$spot->name}}</a>
+                                        <a href="" class="detail-btn" data-toggle="modal" data-target="#myModal" data-id="{{ $spot->id }}">{{$spot->name}}</a>
                                         
                                     
                                         
                                     </h4>
                                     <p class="info"><i class='fa-solid fa-map-location'>&nbsp;</i>{{$spot->disName}}</p>
                                     <p class="description" style=" --max-lines:3; display:-webkit-box; overflow:hidden;-webkit-box-orient:vertical; -webkit-line-clamp:var(--max-lines); ">{{$spot->description}}</p>
+                                    @if(Session::has('save_com'))
+                                        <div class = "alert alert-success">{{session::get('save_com')}}</div>
+                                    @endif
+                                    <form action="{{ route('add_comment',['id' => Session::get('loginId'),'spot_id'=>$spot->id]) }}" method="post">
+                                        @csrf
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="message-text" class="col-form-label">Comment:</label>
+                                                    <textarea class="form-control" name ='message_text' id="message_text"></textarea>
+                                                </div>
+                                                <div class="col">
+                                                    <br>
+                                                    <br>
+                                                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                    <a href=""  class="detail-btn2" data-toggle="modal" data-target="#exampleModal" data-id="{{$spot->id}}">See all Comments</a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -111,7 +133,8 @@
         {{$spots->links('pagination::bootstrap-5')}}
     </div>
 
-    <!-- Button trigger modal -->
+    
+    <!-- Button trigger modal name  -->
     <div class="modal" tabindex="-1" id="myModal">
         <div class="modal-dialog">
           <div class="modal-content"style="width: 180%; margin-left:-180px;">
@@ -149,6 +172,33 @@
         </div>
     </div> 
 
+    <!-- Button trigger modal comments  -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id='comments-container'>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comment-widgets">
+                        <!-- Comment Row -->
+                        <div class="d-flex flex-row comment-row m-t-0">
+                            <div class="comment-text w-100">
+                                <h6 id='name' class="font-medium"></h6> <span id ='text' class="m-b-15 d-block"></span>
+                                <div class="comment-footer"> <span class="text-muted float-right" id='time'></span> </div>
+                            </div>
+                        </div> <!-- Comment Row -->
+                        
+                    </div> <!-- Card -->
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    @include('footer') 
 
 
 
@@ -158,7 +208,6 @@
         
         
     
-    @include('footer')
 
 
 
@@ -180,6 +229,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
+            
             $('.detail-btn').click(function() {
                 const id = $(this).attr('data-id');
                 
@@ -222,6 +272,27 @@
 
 
                     
+                }
+                })
+            });
+            $('.detail-btn2').click(function(event) {
+                event.preventDefault();
+                const id = $(this).attr('data-id');
+                
+                $.ajax({
+                    url: 'view_comment/'+id,
+                    type: 'GET',
+                    data: {
+                        "id": id
+                    },
+                success:function(data) {
+                    $('#text').empty();
+                    $('#name').empty();
+                    $('#time').empty();
+                    
+                    $('#text').html(data[0].destination_review);
+                    $('#name').html(data[0].uname);
+                    $('#time').html(data[0].time_difference);
                 }
                 })
             });
