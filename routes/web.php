@@ -61,6 +61,9 @@ Route::post('/transaction',[package::class,'transaction'])->name('transaction');
 
 
 Route::get('/adminDashboard',[admin::class,'loginAdmin'])->middleware('isLoggedIn');
+Route::get('/adminPackage',[admin::class,'package'])->middleware('isLoggedIn');
+Route::get('/adminSpots',[admin::class,'spots'])->middleware('isLoggedIn');
+Route::get('/adminHotel',[admin::class,'hotel'])->middleware('isLoggedIn');
 
 
 

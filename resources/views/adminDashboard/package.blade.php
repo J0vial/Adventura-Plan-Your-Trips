@@ -10,6 +10,7 @@
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('admin/styles.css') }}">
@@ -38,21 +39,36 @@
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
-          <p class="font-weight-bold">DASHBOARD</p>
+          <p class="font-weight-bold">Packages</p>
         </div>
 
-        <div class="main-cards">
-
-          
-          
-          
-        </div>
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">District Name</th>
+              <th scope="col">Spot Name</th>
+              <th scope="col">Transportation</th>
+              <th scope="col">Days Staying</th>
+              <th scope="col">Price</th>
+              <th scope="col">Booking Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($package as $packages)
+            <tr>
+            <td>{{$packages->spotName}}</td>
+            <td>{{$packages->hotelName}}</td>
+            <td>{{$packages->transport_name}}</td>
+            <td>{{$packages->staying}}</td>
+            <td>{{$packages->price}}</td>
+            </tr>
+            @endforeach
+            </tbody>
+          </table>
 
         
       </main>
       <!-- End Main -->
-
-    </div>
 
     <!-- Scripts -->
     <!-- ApexCharts -->
@@ -61,3 +77,8 @@
     <script src="{{ asset('admin/scripts.js') }}"></script>
   </body>
 </html>
+
+
+
+
+
