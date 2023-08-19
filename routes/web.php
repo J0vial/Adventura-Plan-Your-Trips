@@ -61,7 +61,14 @@ Route::post('/transaction',[package::class,'transaction'])->name('transaction');
 
 
 Route::get('/adminDashboard',[admin::class,'loginAdmin'])->middleware('isLoggedIn');
+Route::post('delete_user_admin/{id}',[admin::class,'delete_user'])->name('delete_user_admin');
+Route::post('/update_user',[admin::class,'update_user'])->name('update_user');
+
+
 Route::get('/adminPackage',[admin::class,'package'])->middleware('isLoggedIn');
+Route::post('delete_pac_admin/{id}',[admin::class,'destroy_package'])->name('delete_pac_admin');
+Route::post('/add_pac_admin',[admin::class,'add_package'])->name('add_pac_admin');
+
 Route::get('/adminSpots',[admin::class,'spots'])->middleware('isLoggedIn');
 Route::get('/adminHotel',[admin::class,'hotel'])->middleware('isLoggedIn');
 

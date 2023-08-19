@@ -39,28 +39,78 @@
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
+          <p class="font-weight-bold">Add Packages</p>
+        </div>
+        @if(Session::has('add'))
+            <div id='sess' ></div>
+        @endif
+        <form action="add_pac_admin" method="post">
+          @csrf
+          
+          <select class="form-control" name='hotel' id='hotel' >
+            <option>--Select Hotels--</option>
+            @foreach($hotel as $hotels)
+              <option value='{{$hotels->id}}'>{{$hotels->name}}</option>
+            @endforeach
+          </select>
+          <br>
+          
+          
+          <select class="form-control" name='spot' id='spot'>
+            <option>--Select Spots--</option>
+            @foreach($spot as $spots)
+              <option value='{{$spots->id}}'>{{$spots->name}}</option>
+            @endforeach
+          </select>
+          <br>
+          <select class="form-control" name='trans' id='trans'>
+            <option>--Select Transportations--</option>
+            @foreach($transport as $transports )
+              <option value='{{$transports->id}}'>Name: {{$transports->transport_name}} || From:{{$transports->disName}} || To:{{$transports->spotName}} </option>
+            @endforeach
+          </select>
+          
+          <br>
+          <input class="form-control" type="text" placeholder="Day Stays" name='stay' id='stay'>
+          <br>
+          <input class="form-control" type="text" placeholder="Price" name='price' id='price'>
+          <br>
+
+          <button type="submit" class="btn btn-success">Add Package</button>
+        </form>
+        <br>
+        <br>
+        <div class="main-title">
           <p class="font-weight-bold">Packages</p>
         </div>
-
+        @if(Session::has('deleted'))
+            <div id='sess' ></div>
+        @endif
         <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">District Name</th>
+              <th scope="col">Hotel Name</th>
               <th scope="col">Spot Name</th>
               <th scope="col">Transportation</th>
               <th scope="col">Days Staying</th>
               <th scope="col">Price</th>
-              <th scope="col">Booking Status</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             @foreach($package as $packages)
             <tr>
-            <td>{{$packages->spotName}}</td>
-            <td>{{$packages->hotelName}}</td>
-            <td>{{$packages->transport_name}}</td>
-            <td>{{$packages->staying}}</td>
-            <td>{{$packages->price}}</td>
+              <td>{{$packages->spotName}}</td>
+              <td>{{$packages->hotelName}}</td>
+              <td>{{$packages->transport_name}}</td>
+              <td>{{$packages->staying}}</td>
+              <td>{{$packages->price}}</td>
+              <form action="{{ route('delete_pac_admin', ['id' => $packages->id]) }}" method="POST">
+                @csrf
+                <td>
+                  <button type='submit'class="btn btn-danger">Delete</button>
+                </td>
+              </form>
             </tr>
             @endforeach
             </tbody>
@@ -69,6 +119,23 @@
         
       </main>
       <!-- End Main -->
+      <style>
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #fff;
+            background-color: #14bf98; 
+            border-color: #14bf98; 
+        }
+
+        .row{
+            --bs-gutter-x: 20rem;
+        }
+         
+    </style>
+    
+    <div class="row" style="margin-left: 100px;">
+        {{$package->links('pagination::bootstrap-5')}}
+    </div>
 
     <!-- Scripts -->
     <!-- ApexCharts -->
