@@ -45,7 +45,7 @@ class AuthController extends Controller
                 if ($request->pass == $user->pass){
 
                     $request->session()->put('loginId', $user->id);
-                    return redirect('admin');
+                    return redirect('adminDashboard');
 
                 }else{
                     return back()->with('fail','Password not match or do not have any email');

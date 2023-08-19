@@ -60,7 +60,7 @@ Route::get('/payment/{id}',[package::class,'payment'])->name('payment');
 Route::post('/transaction',[package::class,'transaction'])->name('transaction');
 
 
-Route::get('/admin',[admin::class,'loginAdmin'])->middleware('isLoggedIn');
+Route::get('/adminDashboard',[admin::class,'loginAdmin'])->middleware('isLoggedIn');
 
 
 

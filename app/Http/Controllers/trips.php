@@ -54,12 +54,14 @@ class trips extends Controller
         
     }
     public function transportType(Request $request){
+        $curr_time = Carbon::now()->timezone('Asia/Dhaka');
         $cid = $request->post('cid');
         $fid = $request->post('fid');
         $types = DB::table('districts')
         ->join('transportations','districts.id','=','transportations.districts_id')
         ->where('transportations.spots_id',$cid)
         ->where('transportations.districts_id',$fid)
+        ->where('transportations.date', '>', $curr_time)
         ->select('transportations.id as transport_id','transportations.type as transport_type','transportations.transport_name as transport_name','transportations.time as ttime','transportations.date as tdate')
         ->get();
         
@@ -78,13 +80,14 @@ class trips extends Controller
         $types = DB::table('hotelrooms')
         ->join('hotels','hotels.id','=','hotelrooms.hotels_id')
         ->where('spots_id',$cid)
+        ->where('hotelrooms.room_no', '>=', 1)
         ->select('hotels.id as hotel_id','Room type as room_type','hotels.name as hotel_name','hotelrooms.bed_type',
         'hotelrooms.cost')
         ->get();
         
         $html = '<option value="">-- Hotels --</option>';
         foreach($types as $type){
-            $html.= '<option value="'.$type->hotel_name .' - '.$type->room_type.' - '.$type->bed_type.' - '.$type->cost.'">'.$type->hotel_name .' - '.$type->room_type.' - '.$type->bed_type.' - '.$type->cost.'</option>';
+            $html.= '<option value="'.$type->hotel_name .' - '.$type->room_type.' - '.$type->bed_type.' - '.$type->cost.'">Name:'.$type->hotel_name .' - Room Type:'.$type->room_type.' - Bed Type:'.$type->bed_type.' - Price:'.$type->cost.'Taka </option>';
             
         }
         return $html;
