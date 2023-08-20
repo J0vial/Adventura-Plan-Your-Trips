@@ -161,11 +161,23 @@
                     <b>Cost: </b>{{$plan->rtcost}} TK </td>
                     
                     <td>{{$total_cost}} TK</td>
+                    
+                    @if($plan->phno == null)
                     <td> 
                         
-                        <button name='delete'  class="btn btn-danger delete-button" value="{{$plan->plan_id}}">Delete</button>
+                            <button name='delete'  class="btn btn-danger delete-button" value="{{$plan->plan_id}}">Delete</button>
+                            
+                            <a href="{{ route('paymentTrip', ['id' => $plan->plan_id]) }}"><button name='delete'  class="btn btn-success" value="{{$plan->plan_id}}">Confirm pay</button>
+                        </a>
                         
                     </td>
+                    @else
+                        <td>
+                            {{$plan->conf}}
+                        </td>
+
+                    @endif
+                    
                 </tr>
                 @endforeach
             @else

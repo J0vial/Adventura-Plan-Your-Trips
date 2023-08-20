@@ -39,8 +39,8 @@
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#">
-              <span class="material-icons-outlined">settings</span> Settings
+            <a href="adminlogout">
+              <span class="material-icons-outlined"></span> Logout
             </a>
           </li>
         </ul>

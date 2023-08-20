@@ -42,7 +42,7 @@
           <p class="font-weight-bold">Add Packages</p>
         </div>
         @if(Session::has('add'))
-            <div id='sess' ></div>
+            <div id='sess'class="alert alert-success" >{{Session::get('add')}}</div>
         @endif
         <form action="add_pac_admin" method="post">
           @csrf
@@ -84,7 +84,7 @@
           <p class="font-weight-bold">Packages</p>
         </div>
         @if(Session::has('deleted'))
-            <div id='sess' ></div>
+            <div id='sess' >{{Session::get('deleted')}}</div>
         @endif
         <table class="table">
           <thead class="thead-dark">
@@ -115,7 +115,42 @@
             @endforeach
             </tbody>
           </table>
-
+          <div class="main-title">
+            <p class="font-weight-bold">User Packages</p>
+          </div>
+          <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">User Name</th>
+              <th scope="col">Package Id</th>
+              <th scope="col">Payment Status</th>
+              <th scope="col">Phone Num</th>
+              <th scope="col">Transaction ID</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($package as $packages)
+            <tr>
+              <td>{{$packages->uid}}</td>
+              <td>{{$packages->upid}}</td>
+              <td>{{$packages->pay}}</td>
+              <td>{{$packages->pnum}}</td>
+              <td>{{$packages->tran}}</td>
+              <form action="{{ route('approve_pac_admin', ['id' => $packages->id]) }}" method="POST">
+                @csrf
+                @if ($packages->pay != 'approved')
+                <td>
+                  <button type='submit'class="btn btn-success">Approve</button>
+                </td>
+                @else
+                <td>Confirmed</td>
+                @endif
+              </form>
+            </tr>
+            @endforeach
+            </tbody>
+          </table>
         
       </main>
       <!-- End Main -->

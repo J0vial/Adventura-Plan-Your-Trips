@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class admin extends Controller
 {
@@ -50,7 +51,7 @@ class admin extends Controller
             ->join('hotels','hotels.id','=','packages.hotels_id')
             ->join('transportations','transportations.id','=','packages.transportations_id')
             ->leftjoin('user_packages','user_packages.packages_id','=','packages.id')
-            ->select('packages.*','spots.name as spotName','spots.id as spotId','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum','user_packages.payment as pay')
+            ->select('packages.*','spots.name as spotName','spots.id as spotId','hotels.name as hotelName','transportations.transport_name as transport_name','user_packages.packages_id as Pid','user_packages.users_id as uid','user_packages.id as upid','user_packages.phonNum as pnum','user_packages.payment as pay','user_packages.transactionId as tran')
             ->paginate(5);
         $hotel = DB::table('hotels')
         ->get();
@@ -77,6 +78,16 @@ class admin extends Controller
         }
     }
 
+    public function approve_pac($id){
+        
+        $data = DB::table('user_packages')
+        ->where('id','=',$id )
+        ->update(['payment'=>'approved']);
+        
+        if($data){
+            return redirect('adminPackage');
+        }
+    }
     public function add_package(Request $request){
         $hotel = $request->hotel;
         $spot = $request->spot;
@@ -101,4 +112,16 @@ class admin extends Controller
     public function hotel(){
         return view("adminDashboard.hotel");
     }//
+
+    public function logout(){
+
+        if (Session::has('loginId')){
+
+            Session::pull('loginId');
+            
+            return redirect('/');
+
+        }
+    }
+
 }

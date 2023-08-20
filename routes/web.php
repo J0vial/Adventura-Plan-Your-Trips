@@ -53,6 +53,9 @@ Route::post('/confirm',[trips::class,'saveData'])->name('confirm');
 Route::post('/delete',[trips::class,'destroy'])->name('delete');
 Route::get('/gettabledata',[trips::class,'tabledata'])->name('gettabledata');
 
+Route::get('/paymentTrip/{id}',[trips::class,'payment'])->name('paymentTrip');
+Route::post('/transactionTrip',[trips::class,'transaction'])->name('transactionTrip');
+
 
 Route::get('/package',[package::class,'packages'])->name('package')->middleware('isLoggedIn');
 Route::post('/confirm_pack/{id}',[package::class,'saveData'])->name('confirm_pack');
@@ -61,6 +64,9 @@ Route::post('/transaction',[package::class,'transaction'])->name('transaction');
 
 
 Route::get('/adminDashboard',[admin::class,'loginAdmin'])->middleware('isLoggedIn');
+Route::get('/adminlogout',[admin::class,'logout']);
+
+
 Route::post('delete_user_admin/{id}',[admin::class,'delete_user'])->name('delete_user_admin');
 Route::post('/update_user',[admin::class,'update_user'])->name('update_user');
 
@@ -68,6 +74,7 @@ Route::post('/update_user',[admin::class,'update_user'])->name('update_user');
 Route::get('/adminPackage',[admin::class,'package'])->middleware('isLoggedIn');
 Route::post('delete_pac_admin/{id}',[admin::class,'destroy_package'])->name('delete_pac_admin');
 Route::post('/add_pac_admin',[admin::class,'add_package'])->name('add_pac_admin');
+Route::post('approve_pac_admin/{id}',[admin::class,'approve_pac'])->name('approve_pac_admin');
 
 Route::get('/adminSpots',[admin::class,'spots'])->middleware('isLoggedIn');
 Route::get('/adminHotel',[admin::class,'hotel'])->middleware('isLoggedIn');
