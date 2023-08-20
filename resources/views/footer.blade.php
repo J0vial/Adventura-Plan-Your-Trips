@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="text-container about">
-                        <h4>Few Words About Gidors</h4>
-                        <p class="white">We're passionate about delivering the best business growth services for companies just starting out as startups or industry players that have established their market position a long tima ago.</p>
+                        <h4>Few Words About Adventura</h4>
+                        <p class="white">We are here to help you planning your vacation. Plan your trips, book your hotels and dive into the journey with Adventura </p>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 
@@ -22,7 +22,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="p-small">Copyright © 2020 <a href="https://inovatik.com">Template by Shakib</a></p>
+                    <p class="p-small">Copyright © 2023 <a href="https://inovatik.com">Template by Shakib</a></p>
                 </div> <!-- end of col -->
             </div> <!-- enf of row -->
         </div> <!-- end of container -->

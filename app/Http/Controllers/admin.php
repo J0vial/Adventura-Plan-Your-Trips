@@ -62,9 +62,9 @@ class admin extends Controller
         ->join('districts','districts.id','=','transportations.districts_id')
         ->select('transportations.*','districts.name as disName','spots.name as spotName' )
         ->get();
+        $packagess  = DB::table('user_packages')->leftjoin('packages','packages.id','=','user_packages.id')->select('user_packages.*')->get();
         
-        
-        return view("adminDashboard.package",compact('package','hotel','spot','transport'));
+        return view("adminDashboard.package",compact('package','hotel','spot','transport','packagess'));
     }//
 
     public function destroy_package($id){
@@ -112,6 +112,9 @@ class admin extends Controller
     public function hotel(){
         return view("adminDashboard.hotel");
     }//
+    public function planner(){
+        return view("adminDashboard.planner");
+    }
 
     public function logout(){
 

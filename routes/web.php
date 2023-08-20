@@ -78,6 +78,7 @@ Route::post('approve_pac_admin/{id}',[admin::class,'approve_pac'])->name('approv
 
 Route::get('/adminSpots',[admin::class,'spots'])->middleware('isLoggedIn');
 Route::get('/adminHotel',[admin::class,'hotel'])->middleware('isLoggedIn');
+Route::get('/adminPlanner',[admin::class,'planner'])->middleware('isLoggedIn');
 
 
 

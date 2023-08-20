@@ -18,21 +18,6 @@
   <body>
     <div class="grid-container">
 
-      <!-- Header -->
-      <header class="header">
-        <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
-        </div>
-        <div class="header-left">
-          <span class="material-icons-outlined">search</span>
-        </div>
-        <div class="header-right">
-          <span class="material-icons-outlined">notifications</span>
-          <span class="material-icons-outlined">email</span>
-          <span class="material-icons-outlined">account_circle</span>
-        </div>
-      </header>
-      <!-- End Header -->
 
     @include('adminDashboard.navbar')
 
@@ -121,7 +106,7 @@
           <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">User Name</th>
+              <th scope="col">User ID</th>
               <th scope="col">Package Id</th>
               <th scope="col">Payment Status</th>
               <th scope="col">Phone Num</th>
@@ -130,21 +115,21 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($package as $packages)
+            @foreach($packagess as $packages)
             <tr>
-              <td>{{$packages->uid}}</td>
-              <td>{{$packages->upid}}</td>
-              <td>{{$packages->pay}}</td>
-              <td>{{$packages->pnum}}</td>
-              <td>{{$packages->tran}}</td>
+              <td>{{$packages->users_id}}</td>
+              <td>{{$packages->packages_id}}</td>
+              <td>{{$packages->payment}}</td>
+              <td>{{$packages->phonNum}}</td>
+              <td>{{$packages->transactionId}}</td>
               <form action="{{ route('approve_pac_admin', ['id' => $packages->id]) }}" method="POST">
                 @csrf
-                @if ($packages->pay != 'approved')
-                <td>
-                  <button type='submit'class="btn btn-success">Approve</button>
-                </td>
+                @if ($packages->payment != 'approved')
+                  <td>
+                    <button type='submit'class="btn btn-success">Approve</button>
+                  </td>
                 @else
-                <td>Confirmed</td>
+                  <td>Confirmed</td>
                 @endif
               </form>
             </tr>

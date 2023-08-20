@@ -2,7 +2,7 @@
 <aside id="sidebar">
         <div class="sidebar-title">
           <div class="sidebar-brand">
-            Adventura Admin Panel
+            Admin Panel
           </div>
           <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
         </div>
@@ -10,32 +10,22 @@
         <ul class="sidebar-list">
           <li class="sidebar-list-item">
             <a href="/adminDashboard">
-              <span class="material-icons-outlined">dashboard</span> Home
+              <span class="material-icons-outlined"></span> Home
             </a>
           </li>
           <li class="sidebar-list-item">
             <a href="/adminPackage">
-              <span class="material-icons-outlined">inventory_2</span> Packages
+              <span class="material-icons-outlined"></span> Packages
             </a>
           </li>
           <li class="sidebar-list-item">
             <a href="#">
-              <span class="material-icons-outlined">fact_check</span> Hotels
+              <span class="material-icons-outlined"></span> Transportation
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#">
-              <span class="material-icons-outlined">add_shopping_cart</span> Transportation
-            </a>
-          </li>
-          <li class="sidebar-list-item">
-            <a href="#">
-              <span class="material-icons-outlined">shopping_cart</span> Sales Orders
-            </a>
-          </li>
-          <li class="sidebar-list-item">
-            <a href="#">
-              <span class="material-icons-outlined">poll</span> Reports
+            <a href="/adminPlanner">
+              <span class="material-icons-outlined"></span> Planning
             </a>
           </li>
           <li class="sidebar-list-item">

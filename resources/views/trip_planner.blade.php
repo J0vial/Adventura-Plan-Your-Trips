@@ -52,8 +52,8 @@
             </div>
 
             <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> DAY STAYS </h4>
-            <input style='width: 300px;height: 50px;margin-right:70px;' type="date" name="date_picker1" placeholder="dates"  required>
-            <input style='width: 300px;height: 50px;margin-right:50px;' type="date" name="date_picker2" placeholder="dates"  required>
+            <b>From:  </b><input style='width: 300px;height: 50px;margin-right:70px;' type="date" name="date_picker1" placeholder="dates"  required>
+            <b>To:  </b><input style='width: 300px;height: 50px;margin-right:50px;' type="date" name="date_picker2" placeholder="dates"  required>
 
             <h4 style="color:aliceblue;font-size: 30px;margin-right: 150px;margin-top:15px;"> FROM [Your Current Position] </h4>
             <div class="select">
